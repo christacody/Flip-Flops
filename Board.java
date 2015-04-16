@@ -1,20 +1,10 @@
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import java.awt.BorderLayout;
-import javax.swing.SwingUtilities;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import javax.swing.BorderFactory;
-import java.awt.Graphics;
-import java.awt.Toolkit;
-import java.awt.Dimension;
-import java.awt.Color;
+import java.awt.geom.*;
+import java.awt.*;
+import javax.swing.*;
 
 public class Board
 {
@@ -147,6 +137,8 @@ public class Board
 class MyPanel extends JPanel
 {
 	private String mode = "SR Latch";
+	static int sAngle = 270;
+	static int arcAngle = 180;
 
 	public MyPanel()
 	{
@@ -166,8 +158,28 @@ class MyPanel extends JPanel
 
 	public void paintComponent(Graphics g)
 	{
+		Graphics2D g2 = (Graphics2D)g;
+		g2.setStroke(new BasicStroke(2));
 		super.paintComponent(g);
 
-		g.drawString(mode, 10, 20);
+		if(mode == "SR Latch")
+		{
+			drawAnd(g2, 130, 200);
+			drawAnd(g2, 130, 500);
+		}
+
+		else
+		{
+			g.drawString(mode, 10, 20);
+		}
+	}
+
+	public void drawAnd(Graphics2D g2, int x, int y)
+	{
+		g2.drawString(Integer.toString(sAngle), 10, 20);
+		g2.drawString(Integer.toString(arcAngle), 10, 40);
+		g2.drawRect(x, y, 70, 100);
+		g2.clearRect(x+69, y+1, 2, 99);
+		g2.drawArc(x+20, y, 100, 100, 270, 180);
 	}
 }
