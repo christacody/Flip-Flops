@@ -47,6 +47,10 @@ public class Board
 		frame.add(listPanel, BorderLayout.CENTER);
 
 		final MyPanel pnl = new MyPanel();
+		JButton but = new JButton(".");
+		but.addActionListener(pnl);
+		but.setActionCommand("A");
+		pnl.add(but);
 
 		frame.add(pnl);
 		frame.pack();
@@ -135,9 +139,11 @@ public class Board
     }*/
 }
 
-class MyPanel extends JPanel
+class MyPanel extends JPanel implements ActionListener
 {
-	private String mode = "SR Latch";
+	private String mode = "SR Latch";	//Determines which diagram is shown
+	private int andWidth = 70;
+	private int andHeight = 100;
 
 	public MyPanel()
 	{
@@ -149,12 +155,14 @@ class MyPanel extends JPanel
 		return new Dimension(800, 840);
 	}
 
+	/** switch between diagrams */
 	public void setMode(String newMode)
 	{
 		mode = newMode;
 		super.repaint();
 	}
 
+	/** Paint components to JPanel */
 	public void paintComponent(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D)g;
@@ -163,9 +171,8 @@ class MyPanel extends JPanel
 
 		if(mode == "SR Latch")
 		{
-			drawAnd(g2, 130, 200);
-			drawAnd(g2, 130, 500);
-			drawConnect(g2, 500, 500);
+			//drawOr(g2, 130, 200);
+			drawNand(g2, 130, 500);
 		}
 
 		else
@@ -177,12 +184,21 @@ class MyPanel extends JPanel
 	/** Draw an AND gate at coordinates (x, y) */
 	public void drawAnd(Graphics2D g2, int x, int y)
 	{
-		int width = 70;
-		int height = 100;
+		g2.drawRect(x, y, andWidth, andHeight);
+		g2.clearRect(x+(andWidth-1), y+1, 2, andHeight-1);
+		g2.drawArc(x+(andWidth-50), y, 100, andHeight, 270, 180);
+	}
 
-		g2.drawRect(x, y, width, height);
-		g2.clearRect(x+(width-1), y+1, 2, height-1);
-		g2.drawArc(x+(width-50), y, 100, height, 270, 180);
+	public void drawNand(Graphics2D g2, int x, int y)
+	{
+		drawAnd(g2, x, y);
+		drawNot(g2, x+120, y+(andHeight/2-7));
+	}
+
+	public void drawOr(Graphics2D g2, int x, int y)
+	{
+		g2.drawArc(x, y, 30, 100, 270, 180);
+		g2.drawArc(x, y, 150, 50, 0, 60);
 	}
 
 	/** Draw a NOT at coordinates (x,y) */
@@ -195,5 +211,17 @@ class MyPanel extends JPanel
 	public void drawConnect(Graphics2D g2, int x, int y)
 	{
 		g2.fillOval(x, y, 8, 8);
+	}
+
+	public void actionPerformed(ActionEvent e)
+	{
+		String command = e.getActionCommand();
+
+		switch(command)
+		{
+			case "A":
+				//Do stuff
+			break;
+		}
 	}
 }
