@@ -1,3 +1,11 @@
+/**
+ * Display interactive diagrams of circuit components including
+ * S-R Latch, D Flip-Flop, and T Flip-Flop.
+ *
+ * @author	Harrry Allen
+ * @author Christa Cody
+ */
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -150,8 +158,9 @@ public class Board
 class MyPanel extends JPanel implements ActionListener
 {
 	private String mode = "SR Latch";	//Determines which diagram is shown
-	private int andWidth = 70;
-	private int andHeight = 100;
+	private int andWidth = 50;			//Width of the AND/NAND gates
+	private int andHeight = 100;		//Height of the AND/NAND gates
+	private int lineThickness = 4;		//Thickness of lines drawn
 
 	/** Constructor: Set border color to black */
 	public MyPanel()
@@ -176,15 +185,16 @@ class MyPanel extends JPanel implements ActionListener
 	public void paintComponent(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D)g;
-		g2.setStroke(new BasicStroke(2));
+		g2.setStroke(new BasicStroke(lineThickness));
 		super.paintComponent(g);
 
 		switch(mode)
 		{
 			//Draw SR Latch diagram
 			case "SR Latch":
-				//drawOr(g2, 130, 200);
-				drawNand(g2, 130, 500);
+				drawNand(g2, 250, 200);
+				drawNand(g2, 250, 500);
+				g2.drawLine(250-50, 200+20, 250, 200+20);
 			break;
 
 
@@ -197,7 +207,7 @@ class MyPanel extends JPanel implements ActionListener
 	public void drawAnd(Graphics2D g2, int x, int y)
 	{
 		g2.drawRect(x, y, andWidth, andHeight);
-		g2.clearRect(x+(andWidth-1), y+1, 2, andHeight-1);
+		g2.clearRect(x+(andWidth-(lineThickness/2)), y+1, lineThickness, andHeight-1);
 		g2.drawArc(x+(andWidth-50), y, 100, andHeight, 270, 180);
 	}
 
@@ -205,7 +215,7 @@ class MyPanel extends JPanel implements ActionListener
 	public void drawNand(Graphics2D g2, int x, int y)
 	{
 		drawAnd(g2, x, y);
-		drawNot(g2, x+120, y+(andHeight/2-7));
+		drawNot(g2, x+(andWidth+50), y+(andHeight/2-7));
 	}
 
 	/** Draw an OR gate at coordinates (x, y) */
@@ -216,7 +226,7 @@ class MyPanel extends JPanel implements ActionListener
 	}
 
 	/** Draw a NOR gate at coordinates (x, y) */
-	public void drawNor(Graphics2D, int x, int y)
+	public void drawNor(Graphics2D g2, int x, int y)
 	{
 
 	}
@@ -228,7 +238,8 @@ class MyPanel extends JPanel implements ActionListener
 	}
 
 	/** Draw a connection represented as a filled dot
-	  *	between circuits at coordinates (x,y) */
+	 *	between circuits at coordinates (x,y)
+	 */
 	public void drawConnect(Graphics2D g2, int x, int y)
 	{
 		g2.fillOval(x, y, 8, 8);
