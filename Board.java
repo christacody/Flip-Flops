@@ -23,6 +23,7 @@ public class Board
 		});
 	}
 
+	/** Initialize GUI */
 	private static void createGUI()
 	{
 		JFrame frame = new JFrame();
@@ -137,8 +138,6 @@ public class Board
 class MyPanel extends JPanel
 {
 	private String mode = "SR Latch";
-	static int sAngle = 270;
-	static int arcAngle = 180;
 
 	public MyPanel()
 	{
@@ -166,6 +165,7 @@ class MyPanel extends JPanel
 		{
 			drawAnd(g2, 130, 200);
 			drawAnd(g2, 130, 500);
+			drawConnect(g2, 500, 500);
 		}
 
 		else
@@ -174,12 +174,26 @@ class MyPanel extends JPanel
 		}
 	}
 
+	/** Draw an AND gate at coordinates (x, y) */
 	public void drawAnd(Graphics2D g2, int x, int y)
 	{
-		g2.drawString(Integer.toString(sAngle), 10, 20);
-		g2.drawString(Integer.toString(arcAngle), 10, 40);
-		g2.drawRect(x, y, 70, 100);
-		g2.clearRect(x+69, y+1, 2, 99);
-		g2.drawArc(x+20, y, 100, 100, 270, 180);
+		int width = 70;
+		int height = 100;
+
+		g2.drawRect(x, y, width, height);
+		g2.clearRect(x+(width-1), y+1, 2, height-1);
+		g2.drawArc(x+(width-50), y, 100, height, 270, 180);
+	}
+
+	/** Draw a NOT at coordinates (x,y) */
+	public void drawNot(Graphics2D g2, int x, int y)
+	{
+		g2.drawOval(x, y, 12, 12);
+	}
+
+	/** Draw a connection between circuits at coordinates (x,y) */
+	public void drawConnect(Graphics2D g2, int x, int y)
+	{
+		g2.fillOval(x, y, 8, 8);
 	}
 }
