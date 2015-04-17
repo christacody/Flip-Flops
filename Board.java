@@ -2,12 +2,19 @@
  * Display interactive diagrams of circuit components including
  * S-R Latch, D Flip-Flop, and T Flip-Flop.
  *
- * TODO: pulse is currently a boolean array used for animating
- *       the circuits when input is given. Going to change it
- *       to utilize bitwise operations instead
+ * TODO: - pulse is currently a boolean array used for animating
+ *         the circuits when input is given. Going to change it
+ *         to utilize bitwise operations instead
+ *		 - Finish S-R Latch
+ *		 - Animate S-R Latch
+ *		 - Design D Flip-Flop
+ *		 - Animate D Flip-Flop
+ * 		 - Design T Flip-Flop
+ *		 - Animate T Flip-Flop
+ *		 - Possibly clean up graphics
  *
  * @author	Harrry Allen
- * @author Christa Cody
+ * @author	Christa Cody
  */
 
 import java.awt.event.ActionListener;
@@ -165,7 +172,7 @@ class MyPanel extends JPanel implements ActionListener
 	private int andWidth = 50;			//Width of the AND/NAND gates
 	private int andHeight = 100;		//Height of the AND/NAND gates
 	private int lineThickness = 4;		//Thickness of lines drawn
-	private boolean[] pulse;			//Indicates pulse to be drawn on diagram
+	private int pulse = 0;				//Indicates pulse to be drawn on diagram
 	private int delay = 600;			//Determines how often diagram is repainted
 	private BasicStroke defaultStroke;	//Default line thickness
 
@@ -174,7 +181,6 @@ class MyPanel extends JPanel implements ActionListener
 	{
 		setBorder(BorderFactory.createLineBorder(Color.black));
 		defaultStroke = new BasicStroke(lineThickness);
-		pulse = new boolean[2];
 
 		// Repaint in increments specified by delay
 		ActionListener drawDelay = new ActionListener()
@@ -212,37 +218,51 @@ class MyPanel extends JPanel implements ActionListener
 		{
 			//Draw SR Latch diagram
 			case "SR Latch":
-				if(pulse[0])
-				{
-					drawNand(g2, 250, 200);
-					drawNand(g2, 250, 500);
-					g2.setColor(Color.red);
-					g2.drawLine(250-50, 200+20, 246, 200+20);
-					g2.setColor(Color.black);
-					pulse[0] = false;
-					pulse[1] = true;
-				}
+				drawSRLatch(g2);
+			break;
 
-				else if(pulse[1])
-				{
-					drawNand(g2, 250, 200);
-					drawNand(g2, 250, 500);
-					g2.setColor(Color.green);
-					g2.drawLine(250-50, 200+20, 246, 200+20);
-					g2.setColor(Color.black);
-					pulse[1] = false;
-				}
+			case "D Flip-Flop":
 
-				else
-				{
-					drawNand(g2, 250, 200);
-					drawNand(g2, 250, 500);
-					g2.drawLine(250-50, 200+20, 246, 200+20);
-				}
+			break;
+
+			case "T Flip-Flop":
+
 			break;
 
 			default:
 				g.drawString(mode, 10, 20);
+		}
+	}
+
+	public void drawSRLatch(Graphics2D g2)
+	{
+		//Initial state: no input received
+		if(pulse == 0)
+		{
+			drawNand(g2, 250, 200);
+			drawNand(g2, 250, 500);
+			g2.drawLine(250-50, 200+20, 246, 200+20);
+		}
+
+		//Cascade begins here
+		else if(pulse == 2)
+		{
+			drawNand(g2, 250, 200);
+			drawNand(g2, 250, 500);
+			g2.setColor(Color.red);
+			g2.drawLine(250-50, 200+20, 246, 200+20);
+			g2.setColor(Color.black);
+			sendPulse();
+		}
+
+		else if(pulse == 1)
+		{
+			drawNand(g2, 250, 200);
+			drawNand(g2, 250, 500);
+			g2.setColor(Color.green);
+			g2.drawLine(250-50, 200+20, 246, 200+20);
+			g2.setColor(Color.black);
+			sendPulse();
 		}
 	}
 
@@ -288,7 +308,8 @@ class MyPanel extends JPanel implements ActionListener
 		g2.setStroke(defaultStroke);
 	}
 
-	/** Draw a connection represented as a filled dot
+	/**
+	 *  Draw a connection represented as a filled dot
 	 *	between circuits at coordinates (x,y)
 	 */
 	public void drawConnect(Graphics2D g2, int x, int y)
@@ -296,20 +317,21 @@ class MyPanel extends JPanel implements ActionListener
 		g2.fillOval(x, y, 8, 8);
 	}
 
+	/**
+	 * If input is received, set pulse flag & bit shift by 1 upon
+	 * each subsequent call until pulse == 0 to signify animation
+	 * of different components
+	 */
 	public void sendPulse()
 	{
-		if(pulse[0])
+		if(pulse == 0)
 		{
-			pulse[0] = false;
-			pulse[1] = true;
+			pulse = 2;
 		}
-		else if(pulse[1])
-		{
-			pulse[1] = false;
-		}
+
 		else
 		{
-			pulse[0] = true;
+			pulse >>= 1;
 		}
 	}
 
