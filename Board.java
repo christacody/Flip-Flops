@@ -132,39 +132,39 @@ public class Board
 	}
 
 	public void cycle()
-    {
+	{
 
-    }
+	}
 
 	public void run()
-    {
-        long beforeTime, timeDiff, sleep;
+	{
+		long beforeTime, timeDiff, sleep;
 
-        beforeTime = System.currentTimeMillis();
+		beforeTime = System.currentTimeMillis();
 
-        while(true)
-        {
-            repaint();
-            cycle();
+		while(true)
+		{
+			repaint();
+			cycle();
 
-            timeDiff = System.currentTimeMillis() - beforeTime;
-            sleep = DELAY - timeDiff;
+			timeDiff = System.currentTimeMillis() - beforeTime;
+			sleep = DELAY - timeDiff;
 
-            if (sleep < 0)
-                sleep = 2;
+			if (sleep < 0)
+				sleep = 2;
 
-            try
-            {
-                Thread.sleep(sleep);
-            }
-            catch (InterruptedException e)
-            {
-                System.out.println("interrupted");
-            }
+			try
+			{
+				Thread.sleep(sleep);
+			}
+			catch (InterruptedException e)
+			{
+				System.out.println("interrupted");
+			}
 
-            beforeTime = System.currentTimeMillis();
-        }
-    }*/
+			beforeTime = System.currentTimeMillis();
+		}
+	}*/
 }
 
 class MyPanel extends JPanel implements ActionListener
@@ -183,7 +183,7 @@ class MyPanel extends JPanel implements ActionListener
 		setBorder(BorderFactory.createLineBorder(Color.black));
 		defaultStroke = new BasicStroke(lineThickness);
 
-		// Repaint in increments specified by delay
+		// Repaint in increments specified by $delay
 		ActionListener drawDelay = new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -217,7 +217,6 @@ class MyPanel extends JPanel implements ActionListener
 
 		switch(mode)
 		{
-			//Draw SR Latch diagram
 			case "SR Latch":
 				drawSRLatch(g2);
 			break;
@@ -235,6 +234,7 @@ class MyPanel extends JPanel implements ActionListener
 		}
 	}
 
+	/** Draw S-R Latch diagram onscreen */
 	public void drawSRLatch(Graphics2D g2)
 	{
 		int tAndX = 300;		//Top NAND gate X coordinate
@@ -247,27 +247,31 @@ class MyPanel extends JPanel implements ActionListener
 			//Top NAND & adjacent Components
 			drawNand(g2, tAndX, tAndY);
 			g2.drawLine(tAndX-100, tAndY+15, tAndX-4, tAndY+15);
-			drawIOPoint(g2, tAndX-110, tAndY+10);
+			drawIOPoint(g2, tAndX-112, tAndY+10);
+
+			Font f = new Font("Arial", 1, 26);
+			g2.setFont(f);
+			g2.drawString("S", tAndX-136, tAndY+24);
 
 			//Bottom NAND & adjacent components
 			drawNand(g2, tAndX, bAndY);
 			g2.drawLine(tAndX-100, bAndY+75, tAndX-4, bAndY+75);
-			drawIOPoint(g2, tAndX-110, bAndY+70);
+			drawIOPoint(g2, tAndX-112, bAndY+70);
 		}
 
 		//Cascade begins here
 		else if(pulse == 2)
 		{
 			drawNand(g2, tAndX, tAndY);
-			drawIOPoint(g2, tAndX-110, tAndY+15);
+			drawIOPoint(g2, tAndX-112, tAndY+10);
 
 			g2.setColor(Color.red);
-			g2.drawLine(tAndX-100, tAndY+20, tAndX-4, tAndY+20);
+			g2.drawLine(tAndX-100, tAndY+15, tAndX-4, tAndY+15);
 			g2.setColor(Color.black);
 
 			drawNand(g2, tAndX, bAndY);
 			g2.drawLine(tAndX-100, bAndY+75, tAndX-4, bAndY+75);
-			drawIOPoint(g2, tAndX-110, bAndY+15);
+			drawIOPoint(g2, tAndX-112, bAndY+70);
 
 			sendPulse();
 		}
@@ -275,15 +279,15 @@ class MyPanel extends JPanel implements ActionListener
 		else if(pulse == 1)
 		{
 			drawNand(g2, tAndX, tAndY);
-			drawIOPoint(g2, tAndX-110, tAndY+15);
+			drawIOPoint(g2, tAndX-112, tAndY+10);
 
 			g2.setColor(Color.green);
-			g2.drawLine(tAndX-100, tAndY+20, tAndX-4, tAndY+20);
+			g2.drawLine(tAndX-100, tAndY+15, tAndX-4, tAndY+15);
 			g2.setColor(Color.black);
 
 			drawNand(g2, tAndX, bAndY);
 			g2.drawLine(tAndX-100, bAndY+75, tAndX-4, bAndY+75);
-			drawIOPoint(g2, tAndX-110, bAndY+15);
+			drawIOPoint(g2, tAndX-112, bAndY+70);
 
 			sendPulse();
 		}
@@ -341,9 +345,10 @@ class MyPanel extends JPanel implements ActionListener
 	}
 
 	/**
-	 * If input is received, set pulse flag & bit shift by 1 upon
+	 * If input is received, set pulse to integer & bit shift by 1 upon
 	 * each subsequent call until pulse == 0 to signal animation
-	 * of different components
+	 * of different components. drawSRLatch will draw a different
+	 * diagram depending on the value of $pulse
 	 */
 	public void sendPulse()
 	{
@@ -366,7 +371,6 @@ class MyPanel extends JPanel implements ActionListener
 		switch(command)
 		{
 			case "A":
-				//Do stuff
 				sendPulse();
 			break;
 		}
