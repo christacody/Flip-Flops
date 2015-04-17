@@ -5,6 +5,7 @@
  * TODO: - pulse is currently a boolean array used for animating
  *         the circuits when input is given. Going to change it
  *         to utilize bitwise operations instead
+ *		 - Finish drawOr & drawNor functions
  *		 - Finish S-R Latch
  *		 - Animate S-R Latch
  *		 - Design D Flip-Flop
@@ -169,8 +170,8 @@ public class Board
 class MyPanel extends JPanel implements ActionListener
 {
 	private String mode = "SR Latch";	//Determines which diagram is shown
-	private int andWidth = 50;			//Width of the AND/NAND gates
-	private int andHeight = 100;		//Height of the AND/NAND gates
+	private int andWidth = 40;			//Width of the AND/NAND gates
+	private int andHeight = 90;			//Height of the AND/NAND gates
 	private int lineThickness = 4;		//Thickness of lines drawn
 	private int pulse = 0;				//Indicates pulse to be drawn on diagram
 	private int delay = 600;			//Determines how often diagram is repainted
@@ -236,32 +237,54 @@ class MyPanel extends JPanel implements ActionListener
 
 	public void drawSRLatch(Graphics2D g2)
 	{
+		int tAndX = 300;		//Top NAND gate X coordinate
+		int tAndY = 200;		//Top NAND gate Y coordinate
+		int bAndY = tAndY+200;	//Bottom NAND gate Y coordinate
+
 		//Initial state: no input received
 		if(pulse == 0)
 		{
-			drawNand(g2, 250, 200);
-			drawNand(g2, 250, 500);
-			g2.drawLine(250-50, 200+20, 246, 200+20);
+			//Top NAND & adjacent Components
+			drawNand(g2, tAndX, tAndY);
+			g2.drawLine(tAndX-100, tAndY+15, tAndX-4, tAndY+15);
+			drawIOPoint(g2, tAndX-110, tAndY+10);
+
+			//Bottom NAND & adjacent components
+			drawNand(g2, tAndX, bAndY);
+			g2.drawLine(tAndX-100, bAndY+75, tAndX-4, bAndY+75);
+			drawIOPoint(g2, tAndX-110, bAndY+70);
 		}
 
 		//Cascade begins here
 		else if(pulse == 2)
 		{
-			drawNand(g2, 250, 200);
-			drawNand(g2, 250, 500);
+			drawNand(g2, tAndX, tAndY);
+			drawIOPoint(g2, tAndX-110, tAndY+15);
+
 			g2.setColor(Color.red);
-			g2.drawLine(250-50, 200+20, 246, 200+20);
+			g2.drawLine(tAndX-100, tAndY+20, tAndX-4, tAndY+20);
 			g2.setColor(Color.black);
+
+			drawNand(g2, tAndX, bAndY);
+			g2.drawLine(tAndX-100, bAndY+75, tAndX-4, bAndY+75);
+			drawIOPoint(g2, tAndX-110, bAndY+15);
+
 			sendPulse();
 		}
 
 		else if(pulse == 1)
 		{
-			drawNand(g2, 250, 200);
-			drawNand(g2, 250, 500);
+			drawNand(g2, tAndX, tAndY);
+			drawIOPoint(g2, tAndX-110, tAndY+15);
+
 			g2.setColor(Color.green);
-			g2.drawLine(250-50, 200+20, 246, 200+20);
+			g2.drawLine(tAndX-100, tAndY+20, tAndX-4, tAndY+20);
 			g2.setColor(Color.black);
+
+			drawNand(g2, tAndX, bAndY);
+			g2.drawLine(tAndX-100, bAndY+75, tAndX-4, bAndY+75);
+			drawIOPoint(g2, tAndX-110, bAndY+15);
+
 			sendPulse();
 		}
 	}
@@ -278,7 +301,7 @@ class MyPanel extends JPanel implements ActionListener
 	public void drawNand(Graphics2D g2, int x, int y)
 	{
 		drawAnd(g2, x, y);
-		drawNot(g2, x+(andWidth+50), y+(andHeight/2-7));
+		drawNot(g2, x+(andWidth+50), y+(andHeight/2-10));
 	}
 
 	/** Draw an OR gate at coordinates (x, y) */
@@ -297,14 +320,14 @@ class MyPanel extends JPanel implements ActionListener
 	/** Draw a NOT at coordinates (x,y) */
 	public void drawNot(Graphics2D g2, int x, int y)
 	{
-		g2.drawOval(x, y, 12, 12);
+		g2.drawOval(x, y, 16, 16);
 	}
 
 	/** Draw a point of I/O at coordinates (x,y) */
 	public void drawIOPoint(Graphics2D g2, int x, int y)
 	{
-		g2.setStroke(new BasicStroke(2));
-		g2.drawOval(x, y, 7, 7);
+		g2.setStroke(new BasicStroke(3));
+		g2.drawOval(x, y, 10, 10);
 		g2.setStroke(defaultStroke);
 	}
 
@@ -319,7 +342,7 @@ class MyPanel extends JPanel implements ActionListener
 
 	/**
 	 * If input is received, set pulse flag & bit shift by 1 upon
-	 * each subsequent call until pulse == 0 to signify animation
+	 * each subsequent call until pulse == 0 to signal animation
 	 * of different components
 	 */
 	public void sendPulse()
