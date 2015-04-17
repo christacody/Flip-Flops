@@ -494,4 +494,12 @@ class MyPanel extends JPanel implements ActionListener
 			break;
 		}
 	}
+	
+	public int[] SRLatch(int S, int R, int Q)
+	{
+	}
+	
+	
+	
+	
 }
