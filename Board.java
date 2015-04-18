@@ -667,4 +667,28 @@ class MyPanel extends JPanel implements ActionListener
 
 		return text;
 	}
+	
+	
+	public int[] DFlipFlop(int D, int Clk, int Q)
+	{
+		int notS = -1;
+		int notR = -1;
+		if(D == 1 && Clk == 1)
+		{
+			notS = 0;
+			notR = 1;
+		}
+		else if ( D == 0 && Clk = 1)
+		{
+			notS = 1;
+			notR = 0;
+		}
+		else 
+		{
+			notS = 1;
+			notR = 1;
+		}
+		int[] array = SRLatch(notS, notR, Q);
+		return array;	
+	}
 }
