@@ -513,7 +513,6 @@ class MyPanel extends JPanel implements ActionListener
 
 	public int[] SRLatch(int S, int R, int Q)
 	{
-		return new int[1];
 	}
 
 
