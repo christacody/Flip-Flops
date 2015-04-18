@@ -552,7 +552,7 @@ class MyPanel extends JPanel implements ActionListener
 			Q = 1;
 		}
 		text[2] = Q;//text after nand
-	    text[3] = Q;//text box for Q
+		text[3] = Q;//text box for Q
 
 
 		text[4] = Q; //text after nand
@@ -566,7 +566,7 @@ class MyPanel extends JPanel implements ActionListener
 			notQ = 1;
 		}
 		text[5] = notQ;//text after nand
-	    text[6] = notQ;//text box for Q
+		text[6] = notQ;//text box for Q
 
 		//check to see if we need to change Q again
 		if(scenario == 2)
