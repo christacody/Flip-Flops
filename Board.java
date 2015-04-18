@@ -510,7 +510,6 @@ class MyPanel extends JPanel implements ActionListener
 			break;
 		}
 	}
-<<<<<<< HEAD
 	
 	public int[] SRLatch(int notS, int notR, int Q)
 	{
@@ -587,15 +586,6 @@ class MyPanel extends JPanel implements ActionListener
 		}
 			
 		return text;
-=======
-
-	public int[] SRLatch(int S, int R, int Q)
-	{
-<<<<<<< HEAD
-		return new int[1];
->>>>>>> 70de84233d80f7954c8bfbd8ed9d3c607daedc54
-=======
->>>>>>> a9754f1c742492fa6a43b5845ebc204e9b2e8f4c
 	}
 
 
