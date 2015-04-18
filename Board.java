@@ -74,7 +74,7 @@ public class Board
 		final MyPanel pnl = new MyPanel();
 
 		//Add button to pnl for input to circuit diagrams
-		JButton but = new JButton(".");
+		JButton but = new JButton("START");
 		but.addActionListener(pnl);
 		but.setActionCommand("A");
 		pnl.add(but);
@@ -241,55 +241,22 @@ class MyPanel extends JPanel implements ActionListener
 		int tAndY = 200;		//Top NAND gate Y coordinate
 		int bAndY = tAndY+200;	//Bottom NAND gate Y coordinate
 
-		//Initial state: no input received
-		if(pulse == 0)
+		Font f = new Font("Monospaced", 1, 26);
+		g2.setFont(f);
+		g2.drawString("S", tAndX-136, tAndY+24);
+
+		f = new Font("Monospaced", 1, 26);
+		g2.setFont(f);
+		g2.drawString("R", tAndX-136, bAndY+82);
+
+		if(true)
 		{
-			//Top NAND & adjacent Components
-			drawNand(g2, tAndX, tAndY);
-			g2.drawLine(tAndX-100, tAndY+15, tAndX-4, tAndY+15);
-			drawIOPoint(g2, tAndX-112, tAndY+10);
-
-			Font f = new Font("Arial", 1, 26);
-			g2.setFont(f);
-			g2.drawString("S", tAndX-136, tAndY+24);
-
-			//Bottom NAND & adjacent components
-			drawNand(g2, tAndX, bAndY);
-			g2.drawLine(tAndX-100, bAndY+75, tAndX-4, bAndY+75);
-			drawIOPoint(g2, tAndX-112, bAndY+70);
+			SRLatchHelper(g2, tAndX, tAndY, bAndY);
 		}
 
-		//Cascade begins here
-		else if(pulse == 2)
+		else
 		{
-			drawNand(g2, tAndX, tAndY);
-			drawIOPoint(g2, tAndX-112, tAndY+10);
 
-			g2.setColor(Color.red);
-			g2.drawLine(tAndX-100, tAndY+15, tAndX-4, tAndY+15);
-			g2.setColor(Color.black);
-
-			drawNand(g2, tAndX, bAndY);
-			g2.drawLine(tAndX-100, bAndY+75, tAndX-4, bAndY+75);
-			drawIOPoint(g2, tAndX-112, bAndY+70);
-
-			sendPulse();
-		}
-
-		else if(pulse == 1)
-		{
-			drawNand(g2, tAndX, tAndY);
-			drawIOPoint(g2, tAndX-112, tAndY+10);
-
-			g2.setColor(Color.green);
-			g2.drawLine(tAndX-100, tAndY+15, tAndX-4, tAndY+15);
-			g2.setColor(Color.black);
-
-			drawNand(g2, tAndX, bAndY);
-			g2.drawLine(tAndX-100, bAndY+75, tAndX-4, bAndY+75);
-			drawIOPoint(g2, tAndX-112, bAndY+70);
-
-			sendPulse();
 		}
 	}
 
@@ -344,6 +311,174 @@ class MyPanel extends JPanel implements ActionListener
 		g2.fillOval(x, y, 8, 8);
 	}
 
+	private void SRLatchHelper(Graphics2D g2, int tAndX, int tAndY, int bAndY)
+	{
+		//Top NAND & adjacent Components
+		drawNand(g2, tAndX, tAndY);
+		drawIOPoint(g2, tAndX-112, tAndY+10);
+		drawSeg1(g2, tAndX, tAndY);
+
+		drawSeg2(g2, tAndX, tAndY);
+		drawSeg3(g2, tAndX, tAndY);
+		drawSeg4(g2, tAndX, tAndY, bAndY);
+		drawSeg5(g2, tAndX, bAndY);
+
+		//Top NAND output
+		drawSeg6(g2, tAndX, tAndY);
+		drawSeg7(g2, tAndX, tAndY);
+		drawIOPoint(g2, tAndX+(andWidth+202), tAndY+(andHeight/2-7));
+
+		//Bottom NAND & adjacent components
+		drawNand(g2, tAndX, bAndY);
+		drawIOPoint(g2, tAndX-112, bAndY+70);
+		drawSeg8(g2, tAndX, bAndY);
+
+		drawSeg9(g2, tAndX, bAndY);
+		drawSeg10(g2, tAndX, bAndY);
+		drawSeg11(g2, tAndX, tAndY, bAndY);
+		drawSeg12(g2, tAndX, tAndY);
+
+		//Bottom NAND output
+		drawSeg13(g2, tAndX, bAndY);
+		drawSeg14(g2, tAndX, bAndY);
+		drawIOPoint(g2, tAndX+(andWidth+202), bAndY+(andHeight/2-7));
+	}
+
+	private void drawScenario1(Graphics2D g2, int tAndX, int tAndY, int bAndY)
+	{
+		drawNand(g2, tAndX, tAndY);
+		drawIOPoint(g2, tAndX-112, tAndY+10);
+
+		g2.setColor(Color.green);
+		drawSeg14(g2, tAndX, bAndY);
+		drawSeg1(g2, tAndX, tAndY);
+		drawSeg2(g2, tAndX, tAndY);
+		drawSeg3(g2, tAndX, tAndY);
+		drawSeg4(g2, tAndX, tAndY, bAndY);
+		drawSeg5(g2, tAndX, bAndY);
+		g2.setColor(Color.black);
+
+		drawSeg6(g2, tAndX, tAndY);
+		drawSeg7(g2, tAndX, tAndY);
+		drawIOPoint(g2, tAndX+(andWidth+202), tAndY+(andHeight/2-7));
+
+		drawNand(g2, tAndX, bAndY);
+		drawIOPoint(g2, tAndX-112, bAndY+70);
+		drawSeg8(g2, tAndX, bAndY);
+
+		drawSeg9(g2, tAndX, bAndY);
+		drawSeg10(g2, tAndX, bAndY);
+		drawSeg11(g2, tAndX, tAndY, bAndY);
+		drawSeg12(g2, tAndX, tAndY);
+
+		drawSeg13(g2, tAndX, bAndY);
+		drawIOPoint(g2, tAndX+(andWidth+202), bAndY+(andHeight/2-7));
+	}
+
+	private void drawScenario2(Graphics2D g2, int tAndX, int tAndY, int bAndY)
+	{
+		//Top NAND & adjacent Components
+		drawNand(g2, tAndX, tAndY);
+		drawIOPoint(g2, tAndX-112, tAndY+10);
+		drawSeg1(g2, tAndX, tAndY);
+
+		drawSeg2(g2, tAndX, tAndY);
+		drawSeg3(g2, tAndX, tAndY);
+		drawSeg4(g2, tAndX, tAndY, bAndY);
+		drawSeg5(g2, tAndX, bAndY);
+
+		//Top NAND output
+		drawSeg6(g2, tAndX, tAndY);
+		drawSeg7(g2, tAndX, tAndY);
+		drawIOPoint(g2, tAndX+(andWidth+202), tAndY+(andHeight/2-7));
+
+		//Bottom NAND & adjacent components
+		drawNand(g2, tAndX, bAndY);
+		drawIOPoint(g2, tAndX-112, bAndY+70);
+		drawSeg8(g2, tAndX, bAndY);
+
+		drawSeg9(g2, tAndX, bAndY);
+		drawSeg10(g2, tAndX, bAndY);
+		drawSeg11(g2, tAndX, tAndY, bAndY);
+		drawSeg12(g2, tAndX, tAndY);
+
+		//Bottom NAND output
+		drawSeg13(g2, tAndX, bAndY);
+		drawSeg14(g2, tAndX, bAndY);
+		drawIOPoint(g2, tAndX+(andWidth+202), bAndY+(andHeight/2-7));
+	}
+
+	private void drawSeg1(Graphics g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX-100, tAndY+15, tAndX-4, tAndY+15);
+	}
+
+	private void drawSeg2(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX-66, tAndY+75, tAndX-4, tAndY+75);
+	}
+
+	private void drawSeg3(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX-66, tAndY+75, tAndX-66, tAndY+105);
+	}
+
+	private void drawSeg4(Graphics2D g2, int tAndX, int tAndY, int bAndY)
+	{
+		g2.drawLine(tAndX-66, tAndY+105, tAndX+(andWidth+112), bAndY+(andHeight/2-32));
+	}
+
+	private void drawSeg5(Graphics2D g2, int tAndX, int bAndY)
+	{
+		g2.drawLine(tAndX+(andWidth+112), bAndY+(andHeight/2-2), tAndX+(andWidth+112), bAndY+(andHeight/2-32));
+	}
+
+	private void drawSeg6(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX+(andWidth+68), tAndY+(andHeight/2-2), tAndX+(andWidth+112), tAndY+(andHeight/2-2));
+	}
+
+	private void drawSeg7(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX+(andWidth+112), tAndY+(andHeight/2-2), tAndX+(andWidth+200), tAndY+(andHeight/2-2));
+	}
+
+	private void drawSeg8(Graphics2D g2, int tAndX, int bAndY)
+	{
+		g2.drawLine(tAndX-100, bAndY+75, tAndX-4, bAndY+75);
+
+	}
+
+	private void drawSeg9(Graphics2D g2, int tAndX, int bAndY)
+	{
+		g2.drawLine(tAndX-66, bAndY+15, tAndX-4, bAndY+15);
+	}
+
+	private void drawSeg10(Graphics2D g2, int tAndX, int bAndY)
+	{
+		g2.drawLine(tAndX-66, bAndY+15, tAndX-66, bAndY-15);
+	}
+
+	private void drawSeg11(Graphics2D g2, int tAndX, int tAndY, int bAndY)
+	{
+		g2.drawLine(tAndX-66, bAndY-15, tAndX+(andWidth+112), tAndY+(andHeight/2+32));
+	}
+
+	private void drawSeg12(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX+(andWidth+112), tAndY+(andHeight/2-2), tAndX+(andWidth+112), tAndY+(andHeight/2+32));
+	}
+
+	private void drawSeg13(Graphics2D g2, int tAndX, int bAndY)
+	{
+		g2.drawLine(tAndX+(andWidth+68), bAndY+(andHeight/2-2), tAndX+(andWidth+112), bAndY+(andHeight/2-2));
+	}
+
+	private void drawSeg14(Graphics2D g2, int tAndX, int bAndY)
+	{
+		g2.drawLine(tAndX+(andWidth+112), bAndY+(andHeight/2-2), tAndX+(andWidth+200), bAndY+(andHeight/2-2));
+	}
+
 	/**
 	 * If input is received, set pulse to integer & bit shift by 1 upon
 	 * each subsequent call until pulse == 0 to signal animation
@@ -375,6 +510,7 @@ class MyPanel extends JPanel implements ActionListener
 			break;
 		}
 	}
+<<<<<<< HEAD
 	
 	public int[] SRLatch(int notS, int notR, int Q)
 	{
@@ -451,9 +587,15 @@ class MyPanel extends JPanel implements ActionListener
 		}
 			
 		return text;
+=======
+
+	public int[] SRLatch(int S, int R, int Q)
+	{
+		return new int[1];
+>>>>>>> 70de84233d80f7954c8bfbd8ed9d3c607daedc54
 	}
-	
-	
-	
-	
+
+
+
+
 }
