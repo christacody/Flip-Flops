@@ -598,10 +598,17 @@ class MyPanel extends JPanel implements ActionListener
 		//scenario 1: notS and notR are both 1
 		//scenario 2: notS and notR are different
 		int arraysize = -1;
-		if(notS == notR)
+		if(notS == 1 && notR == 1)
 		{
 			scenario = 1;
 			arraysize = 7;
+		}
+		else if ( notS == 0 && notR==0)
+		{
+			if( Q == 0)
+				scenario = 1;
+			else
+				scenario = 2;
 		}
 		else
 		{
