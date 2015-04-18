@@ -251,7 +251,7 @@ class MyPanel extends JPanel implements ActionListener
 
 		if(true)
 		{
-			drawScenario1(g2, tAndX, tAndY, bAndY);
+			SRLatchHelper(g2, tAndX, tAndY, bAndY);
 		}
 
 		else
@@ -311,7 +311,7 @@ class MyPanel extends JPanel implements ActionListener
 		g2.fillOval(x, y, 8, 8);
 	}
 
-	private void drawScenario1(Graphics2D g2, int tAndX, int tAndY, int bAndY)
+	private void SRLatchHelper(Graphics2D g2, int tAndX, int tAndY, int bAndY)
 	{
 		//Top NAND & adjacent Components
 		drawNand(g2, tAndX, tAndY);
@@ -344,7 +344,38 @@ class MyPanel extends JPanel implements ActionListener
 		drawIOPoint(g2, tAndX+(andWidth+202), bAndY+(andHeight/2-7));
 	}
 
-	private void drawScenario2(Graphics2D, int tAndX, int tAndY, int bAndY)
+	private void drawScenario1(Graphics2D g2, int tAndX, int tAndY, int bAndY)
+	{
+		drawNand(g2, tAndX, tAndY);
+		drawIOPoint(g2, tAndX-112, tAndY+10);
+
+		g2.setColor(Color.green);
+		drawSeg14(g2, tAndX, bAndY);
+		drawSeg1(g2, tAndX, tAndY);
+		drawSeg2(g2, tAndX, tAndY);
+		drawSeg3(g2, tAndX, tAndY);
+		drawSeg4(g2, tAndX, tAndY, bAndY);
+		drawSeg5(g2, tAndX, bAndY);
+		g2.setColor(Color.black);
+
+		drawSeg6(g2, tAndX, tAndY);
+		drawSeg7(g2, tAndX, tAndY);
+		drawIOPoint(g2, tAndX+(andWidth+202), tAndY+(andHeight/2-7));
+
+		drawNand(g2, tAndX, bAndY);
+		drawIOPoint(g2, tAndX-112, bAndY+70);
+		drawSeg8(g2, tAndX, bAndY);
+
+		drawSeg9(g2, tAndX, bAndY);
+		drawSeg10(g2, tAndX, bAndY);
+		drawSeg11(g2, tAndX, tAndY, bAndY);
+		drawSeg12(g2, tAndX, tAndY);
+
+		drawSeg13(g2, tAndX, bAndY);
+		drawIOPoint(g2, tAndX+(andWidth+202), bAndY+(andHeight/2-7));
+	}
+
+	private void drawScenario2(Graphics2D g2, int tAndX, int tAndY, int bAndY)
 	{
 		//Top NAND & adjacent Components
 		drawNand(g2, tAndX, tAndY);
@@ -482,6 +513,7 @@ class MyPanel extends JPanel implements ActionListener
 
 	public int[] SRLatch(int S, int R, int Q)
 	{
+		return new int[1];
 	}
 
 
