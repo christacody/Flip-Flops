@@ -249,114 +249,14 @@ class MyPanel extends JPanel implements ActionListener
 		g2.setFont(f);
 		g2.drawString("R", tAndX-136, bAndY+82);
 
-		//Initial state: no input received
-		if(pulse == 0)
+		if(true)
 		{
-			//Top NAND & adjacent Components
-			drawNand(g2, tAndX, tAndY);
-			drawIOPoint(g2, tAndX-112, tAndY+10);
-			drawSeg1(g2, tAndX, tAndY);
-
-			drawSeg2(g2, tAndX, tAndY);
-			drawSeg3(g2, tAndX, tAndY);
-			drawSeg4(g2, tAndX, tAndY, bAndY, andWidth, andHeight);
-			drawSeg5(g2, tAndX, bAndY, andWidth, andHeight);
-
-			//Top NAND output
-			drawSeg6(g2, tAndX, tAndY, andWidth, andHeight);
-			drawSeg7(g2, tAndX, tAndY, andWidth, andHeight);
-			drawIOPoint(g2, tAndX+(andWidth+202), tAndY+(andHeight/2-7));
-
-			//Bottom NAND & adjacent components
-			drawNand(g2, tAndX, bAndY);
-			drawIOPoint(g2, tAndX-112, bAndY+70);
-			drawSeg8(g2, tAndX, bAndY);
-
-			drawSeg9(g2, tAndX, bAndY);
-			drawSeg10(g2, tAndX, bAndY);
-			drawSeg11(g2, tAndX, tAndY, bAndY, andWidth, andHeight);
-			drawSeg12(g2, tAndX, tAndY, andWidth, andHeight);
-
-			//Bottom NAND output
-			drawSeg13(g2, tAndX, bAndY, andWidth, andHeight);
-			drawSeg14(g2, tAndX, bAndY, andWidth, andHeight);
-			drawIOPoint(g2, tAndX+(andWidth+202), bAndY+(andHeight/2-7));
+			drawScenario1(g2, tAndX, tAndY, bAndY);
 		}
 
-		//Cascade begins here
-		else if(pulse == 2)
+		else
 		{
-			//Top NAND & adjacent components
-			drawNand(g2, tAndX, tAndY);
-			drawIOPoint(g2, tAndX-112, tAndY+10);
 
-			g2.setColor(Color.red);
-			drawSeg1(g2, tAndX, tAndY);
-			g2.setColor(Color.black);
-			drawSeg2(g2, tAndX, tAndY);
-
-			drawSeg3(g2, tAndX, tAndY);
-			drawSeg4(g2, tAndX, tAndY, bAndY, andWidth, andHeight);
-			drawSeg5(g2, tAndX, bAndY, andWidth, andHeight);
-
-			//Top NAND output
-			drawSeg6(g2, tAndX, tAndY, andWidth, andHeight);
-			drawSeg7(g2, tAndX, tAndY, andWidth, andHeight);
-			drawIOPoint(g2, tAndX+(andWidth+202), tAndY+(andHeight/2-7));
-
-			//Bottom NAND gate & adjecent components
-			drawNand(g2, tAndX, bAndY);
-			drawIOPoint(g2, tAndX-112, bAndY+70);
-			drawSeg8(g2, tAndX, bAndY);
-
-			drawSeg9(g2, tAndX, bAndY);
-			drawSeg10(g2, tAndX, bAndY);
-			drawSeg11(g2, tAndX, tAndY, bAndY, andWidth, andHeight);
-			drawSeg12(g2, tAndX, tAndY, andWidth, andHeight);
-
-			//Bottom NAND output
-			drawSeg13(g2, tAndX, bAndY, andWidth, andHeight);
-			drawSeg14(g2, tAndX, bAndY, andWidth, andHeight);
-			drawIOPoint(g2, tAndX+(andWidth+202), bAndY+(andHeight/2-7));
-
-			sendPulse();
-		}
-
-		else if(pulse == 1)
-		{
-			//Top NAND gate & adjacent components
-			drawNand(g2, tAndX, tAndY);
-			drawIOPoint(g2, tAndX-112, tAndY+10);
-
-			g2.setColor(Color.green);
-			drawSeg1(g2, tAndX, tAndY);
-			g2.setColor(Color.black);
-			drawSeg2(g2, tAndX, tAndY);
-
-			drawSeg3(g2, tAndX, tAndY);
-			drawSeg4(g2, tAndX, tAndY, bAndY, andWidth, andHeight);
-			drawSeg5(g2, tAndX, bAndY, andWidth, andHeight);
-
-			//Top NAND output
-			drawSeg6(g2, tAndX, tAndY, andWidth, andHeight);
-			drawSeg7(g2, tAndX, tAndY, andWidth, andHeight);
-			drawIOPoint(g2, tAndX+(andWidth+202), tAndY+(andHeight/2-7));
-
-			//Bottom NAND gate & adjacent
-			drawNand(g2, tAndX, bAndY);
-			drawIOPoint(g2, tAndX-112, bAndY+70);
-			drawSeg8(g2, tAndX, bAndY);
-
-			drawSeg9(g2, tAndX, bAndY);
-			drawSeg10(g2, tAndX, bAndY);
-			drawSeg11(g2, tAndX, tAndY, bAndY, andWidth, andHeight);
-			drawSeg12(g2, tAndX, tAndY, andWidth, andHeight);
-
-			drawSeg13(g2, tAndX, bAndY, andWidth, andHeight);
-			drawSeg14(g2, tAndX, bAndY, andWidth, andHeight);
-			drawIOPoint(g2, tAndX+(andWidth+202), bAndY+(andHeight/2-7));
-
-			sendPulse();
 		}
 	}
 
@@ -411,6 +311,72 @@ class MyPanel extends JPanel implements ActionListener
 		g2.fillOval(x, y, 8, 8);
 	}
 
+	private void drawScenario1(Graphics2D g2, int tAndX, int tAndY, int bAndY)
+	{
+		//Top NAND & adjacent Components
+		drawNand(g2, tAndX, tAndY);
+		drawIOPoint(g2, tAndX-112, tAndY+10);
+		drawSeg1(g2, tAndX, tAndY);
+
+		drawSeg2(g2, tAndX, tAndY);
+		drawSeg3(g2, tAndX, tAndY);
+		drawSeg4(g2, tAndX, tAndY, bAndY);
+		drawSeg5(g2, tAndX, bAndY);
+
+		//Top NAND output
+		drawSeg6(g2, tAndX, tAndY);
+		drawSeg7(g2, tAndX, tAndY);
+		drawIOPoint(g2, tAndX+(andWidth+202), tAndY+(andHeight/2-7));
+
+		//Bottom NAND & adjacent components
+		drawNand(g2, tAndX, bAndY);
+		drawIOPoint(g2, tAndX-112, bAndY+70);
+		drawSeg8(g2, tAndX, bAndY);
+
+		drawSeg9(g2, tAndX, bAndY);
+		drawSeg10(g2, tAndX, bAndY);
+		drawSeg11(g2, tAndX, tAndY, bAndY);
+		drawSeg12(g2, tAndX, tAndY);
+
+		//Bottom NAND output
+		drawSeg13(g2, tAndX, bAndY);
+		drawSeg14(g2, tAndX, bAndY);
+		drawIOPoint(g2, tAndX+(andWidth+202), bAndY+(andHeight/2-7));
+	}
+
+	private void drawScenario2(Graphics2D, int tAndX, int tAndY, int bAndY)
+	{
+		//Top NAND & adjacent Components
+		drawNand(g2, tAndX, tAndY);
+		drawIOPoint(g2, tAndX-112, tAndY+10);
+		drawSeg1(g2, tAndX, tAndY);
+
+		drawSeg2(g2, tAndX, tAndY);
+		drawSeg3(g2, tAndX, tAndY);
+		drawSeg4(g2, tAndX, tAndY, bAndY);
+		drawSeg5(g2, tAndX, bAndY);
+
+		//Top NAND output
+		drawSeg6(g2, tAndX, tAndY);
+		drawSeg7(g2, tAndX, tAndY);
+		drawIOPoint(g2, tAndX+(andWidth+202), tAndY+(andHeight/2-7));
+
+		//Bottom NAND & adjacent components
+		drawNand(g2, tAndX, bAndY);
+		drawIOPoint(g2, tAndX-112, bAndY+70);
+		drawSeg8(g2, tAndX, bAndY);
+
+		drawSeg9(g2, tAndX, bAndY);
+		drawSeg10(g2, tAndX, bAndY);
+		drawSeg11(g2, tAndX, tAndY, bAndY);
+		drawSeg12(g2, tAndX, tAndY);
+
+		//Bottom NAND output
+		drawSeg13(g2, tAndX, bAndY);
+		drawSeg14(g2, tAndX, bAndY);
+		drawIOPoint(g2, tAndX+(andWidth+202), bAndY+(andHeight/2-7));
+	}
+
 	private void drawSeg1(Graphics g2, int tAndX, int tAndY)
 	{
 		g2.drawLine(tAndX-100, tAndY+15, tAndX-4, tAndY+15);
@@ -426,22 +392,22 @@ class MyPanel extends JPanel implements ActionListener
 		g2.drawLine(tAndX-66, tAndY+75, tAndX-66, tAndY+105);
 	}
 
-	private void drawSeg4(Graphics2D g2, int tAndX, int tAndY, int bAndY, int andWidth, int andHeight)
+	private void drawSeg4(Graphics2D g2, int tAndX, int tAndY, int bAndY)
 	{
 		g2.drawLine(tAndX-66, tAndY+105, tAndX+(andWidth+112), bAndY+(andHeight/2-32));
 	}
 
-	private void drawSeg5(Graphics2D g2, int tAndX, int bAndY, int andWidth, int andHeight)
+	private void drawSeg5(Graphics2D g2, int tAndX, int bAndY)
 	{
 		g2.drawLine(tAndX+(andWidth+112), bAndY+(andHeight/2-2), tAndX+(andWidth+112), bAndY+(andHeight/2-32));
 	}
 
-	private void drawSeg6(Graphics2D g2, int tAndX, int tAndY, int andWidth, int andHeight)
+	private void drawSeg6(Graphics2D g2, int tAndX, int tAndY)
 	{
 		g2.drawLine(tAndX+(andWidth+68), tAndY+(andHeight/2-2), tAndX+(andWidth+112), tAndY+(andHeight/2-2));
 	}
 
-	private void drawSeg7(Graphics2D g2, int tAndX, int tAndY, int andWidth, int andHeight)
+	private void drawSeg7(Graphics2D g2, int tAndX, int tAndY)
 	{
 		g2.drawLine(tAndX+(andWidth+112), tAndY+(andHeight/2-2), tAndX+(andWidth+200), tAndY+(andHeight/2-2));
 	}
@@ -462,22 +428,22 @@ class MyPanel extends JPanel implements ActionListener
 		g2.drawLine(tAndX-66, bAndY+15, tAndX-66, bAndY-15);
 	}
 
-	private void drawSeg11(Graphics2D g2, int tAndX, int tAndY, int bAndY, int andWidth, int andHeight)
+	private void drawSeg11(Graphics2D g2, int tAndX, int tAndY, int bAndY)
 	{
 		g2.drawLine(tAndX-66, bAndY-15, tAndX+(andWidth+112), tAndY+(andHeight/2+32));
 	}
 
-	private void drawSeg12(Graphics2D g2, int tAndX, int tAndY, int andWidth, int andHeight)
+	private void drawSeg12(Graphics2D g2, int tAndX, int tAndY)
 	{
 		g2.drawLine(tAndX+(andWidth+112), tAndY+(andHeight/2-2), tAndX+(andWidth+112), tAndY+(andHeight/2+32));
 	}
 
-	private void drawSeg13(Graphics2D g2, int tAndX, int bAndY, int andWidth, int andHeight)
+	private void drawSeg13(Graphics2D g2, int tAndX, int bAndY)
 	{
 		g2.drawLine(tAndX+(andWidth+68), bAndY+(andHeight/2-2), tAndX+(andWidth+112), bAndY+(andHeight/2-2));
 	}
 
-	private void drawSeg14(Graphics2D g2, int tAndX, int bAndY, int andWidth, int andHeight)
+	private void drawSeg14(Graphics2D g2, int tAndX, int bAndY)
 	{
 		g2.drawLine(tAndX+(andWidth+112), bAndY+(andHeight/2-2), tAndX+(andWidth+200), bAndY+(andHeight/2-2));
 	}
