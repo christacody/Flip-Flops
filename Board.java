@@ -510,8 +510,7 @@ class MyPanel extends JPanel implements ActionListener
 			break;
 		}
 	}
-<<<<<<< HEAD
-	
+
 	public int[] SRLatch(int notS, int notR, int Q)
 	{
 		int scenario = -1;
@@ -524,51 +523,51 @@ class MyPanel extends JPanel implements ActionListener
 			scenario = 1;
 			arraysize = 7;
 		}
-		else 
+		else
 		{
 			scenario = 2;
 			arraysize = 10;
 		}
-		
+
 		int[] text = new int[arraysize];
 		text[0] = scenario; //tells you which scenario
-		
-		
+
+
 		//create notQ
 		int notQ = -1;
 		if(Q == 0)
 			notQ = 1;
 		else
 			notQ = 0;
-		
+
 		text[1] = notQ;//text before nand representing notQ
-		
+
 		//check notS & notQ
 		if ( notS==1 &&  notQ ==1)
 		{
 			Q = 0;
 		}
-		else 
+		else
 		{
 			Q = 1;
 		}
 		text[2] = Q;//text after nand
 	    text[3] = Q;//text box for Q
-		
-		
+
+
 		text[4] = Q; //text after nand
 		//check notR and Q
 		if ( notR==1 && Q ==1)
 		{
 			notQ = 0;
 		}
-		else 
+		else
 		{
 			notQ = 1;
 		}
 		text[5] = notQ;//text after nand
 	    text[6] = notQ;//text box for Q
-		
+
 		//check to see if we need to change Q again
 		if(scenario == 2)
 		{
@@ -578,27 +577,14 @@ class MyPanel extends JPanel implements ActionListener
 			{
 				Q = 0;
 			}
-			else 
+			else
 			{
 				Q = 1;
 			}
 			text[8] = Q;//text after nand
 			text[9] = Q;//text box for Q
 		}
-			
+
 		return text;
-=======
-
-	public int[] SRLatch(int S, int R, int Q)
-	{
-<<<<<<< HEAD
-		return new int[1];
->>>>>>> 70de84233d80f7954c8bfbd8ed9d3c607daedc54
-=======
->>>>>>> a9754f1c742492fa6a43b5845ebc204e9b2e8f4c
 	}
-
-
-
-
 }
