@@ -678,7 +678,7 @@ class MyPanel extends JPanel implements ActionListener
 			notS = 0;
 			notR = 1;
 		}
-		else if ( D == 0 && Clk = 1)
+		else if ( D == 0 && Clk == 1)
 		{
 			notS = 1;
 			notR = 0;
