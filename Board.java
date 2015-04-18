@@ -25,6 +25,7 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.*;
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 public class Board
 {
@@ -173,7 +174,7 @@ class MyPanel extends JPanel implements ActionListener
 	private int andWidth = 40;			//Width of the AND/NAND gates
 	private int andHeight = 90;			//Height of the AND/NAND gates
 	private int lineThickness = 4;		//Thickness of lines drawn
-	private int pulse = 0;				//Indicates pulse to be drawn on diagram
+	private boolean pulse = false;		//Indicates pulse to be drawn on diagram
 	private int delay = 600;			//Determines how often diagram is repainted
 	private BasicStroke defaultStroke;	//Default line thickness
 
@@ -240,6 +241,7 @@ class MyPanel extends JPanel implements ActionListener
 		int tAndX = 300;		//Top NAND gate X coordinate
 		int tAndY = 200;		//Top NAND gate Y coordinate
 		int bAndY = tAndY+200;	//Bottom NAND gate Y coordinate
+		int[] latch;
 
 		Font f = new Font("Monospaced", 1, 26);
 		g2.setFont(f);
@@ -249,14 +251,27 @@ class MyPanel extends JPanel implements ActionListener
 		g2.setFont(f);
 		g2.drawString("R", tAndX-136, bAndY+82);
 
-		if(true)
+		if(pulse)
 		{
-			SRLatchHelper(g2, tAndX, tAndY, bAndY);
+			System.out.println("PULSE");
+			latch = SRLatch(1,1,1);
+
+			if(latch[0] == 1)
+			{
+				System.out.println("SCENARIO 1");
+				drawScenario1(g2, tAndX, tAndY, bAndY);
+			}
+
+			else if(latch[0] == 2)
+			{
+				System.out.println("SCENARIO 2");
+				drawScenario2(g2, tAndX, tAndY, bAndY);
+			}
 		}
 
 		else
 		{
-
+			SRLatchHelper(g2, tAndX, tAndY, bAndY);
 		}
 	}
 
@@ -349,29 +364,63 @@ class MyPanel extends JPanel implements ActionListener
 		drawNand(g2, tAndX, tAndY);
 		drawIOPoint(g2, tAndX-112, tAndY+10);
 
-		g2.setColor(Color.green);
-		drawSeg14(g2, tAndX, bAndY);
-		drawSeg1(g2, tAndX, tAndY);
-		drawSeg2(g2, tAndX, tAndY);
-		drawSeg3(g2, tAndX, tAndY);
-		drawSeg4(g2, tAndX, tAndY, bAndY);
-		drawSeg5(g2, tAndX, bAndY);
-		g2.setColor(Color.black);
+		if(true)
+		{
+			g2.setColor(Color.green);
+			drawSeg14(g2, tAndX, bAndY);
+			drawSeg1(g2, tAndX, tAndY);
+			drawSeg2(g2, tAndX, tAndY);
+			drawSeg3(g2, tAndX, tAndY);
+			drawSeg4(g2, tAndX, tAndY, bAndY);
+			drawSeg5(g2, tAndX, bAndY);
+			g2.setColor(Color.black);
+		}
 
-		drawSeg6(g2, tAndX, tAndY);
-		drawSeg7(g2, tAndX, tAndY);
+		else
+		{
+
+		}
+
+		if(true)
+		{
+			drawSeg6(g2, tAndX, tAndY);
+			drawSeg7(g2, tAndX, tAndY);
+		}
+
+		else
+		{
+
+		}
+
 		drawIOPoint(g2, tAndX+(andWidth+202), tAndY+(andHeight/2-7));
 
 		drawNand(g2, tAndX, bAndY);
 		drawIOPoint(g2, tAndX-112, bAndY+70);
-		drawSeg8(g2, tAndX, bAndY);
 
-		drawSeg9(g2, tAndX, bAndY);
-		drawSeg10(g2, tAndX, bAndY);
-		drawSeg11(g2, tAndX, tAndY, bAndY);
-		drawSeg12(g2, tAndX, tAndY);
+		if(true)
+		{
+			drawSeg8(g2, tAndX, bAndY);
+			drawSeg9(g2, tAndX, bAndY);
+			drawSeg10(g2, tAndX, bAndY);
+			drawSeg11(g2, tAndX, tAndY, bAndY);
+			drawSeg12(g2, tAndX, tAndY);
+		}
 
-		drawSeg13(g2, tAndX, bAndY);
+		else
+		{
+
+		}
+
+		if(true)
+		{
+			drawSeg13(g2, tAndX, bAndY);
+		}
+
+		else
+		{
+
+		}
+
 		drawIOPoint(g2, tAndX+(andWidth+202), bAndY+(andHeight/2-7));
 	}
 
@@ -487,14 +536,9 @@ class MyPanel extends JPanel implements ActionListener
 	 */
 	public void sendPulse()
 	{
-		if(pulse == 0)
+		if(!pulse)
 		{
-			pulse = 2;
-		}
-
-		else
-		{
-			pulse >>= 1;
+			pulse = true;
 		}
 	}
 
