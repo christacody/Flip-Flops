@@ -175,6 +175,7 @@ class MyPanel extends JPanel implements ActionListener
 	private int andHeight = 90;			//Height of the AND/NAND gates
 	private int lineThickness = 4;		//Thickness of lines drawn
 	private boolean pulse = false;		//Indicates pulse to be drawn on diagram
+	private int stage = 0;				//Indicates stage of diagram to be drawn next
 	private int delay = 600;			//Determines how often diagram is repainted
 	private BasicStroke defaultStroke;	//Default line thickness
 
@@ -245,30 +246,48 @@ class MyPanel extends JPanel implements ActionListener
 
 		Font f = new Font("Monospaced", 1, 26);
 		g2.setFont(f);
+		g2.drawLine(tAndX-134, tAndY, tAndX-122, tAndY);
 		g2.drawString("S", tAndX-136, tAndY+24);
-
-		f = new Font("Monospaced", 1, 26);
-		g2.setFont(f);
+		g2.drawLine(tAndX-134, bAndY+58, tAndX-122, bAndY+58);
 		g2.drawString("R", tAndX-136, bAndY+82);
+		g2.drawString("Q", tAndX+(andWidth+218), tAndY+(andHeight/2+7));
+		g2.drawLine(tAndX+(andWidth+219), bAndY+(andHeight/2-17), tAndX+(andWidth+231), bAndY+(andHeight/2-17));
+		g2.drawString("Q", tAndX+(andWidth+218), bAndY+(andHeight/2+7));
+
+		//If stage != 0 then the animation is not complete
+		if(stage != 0)
+		{
+			pulse = true;
+		}
 
 		if(pulse)
 		{
-			System.out.println("PULSE");
 			latch = SRLatch(1,1,1);
 
+			//First animation scenario
 			if(latch[0] == 1)
 			{
-				System.out.println("SCENARIO 1");
+				if(stage == 0)
+				{
+					stage = 8;
+				}
+
 				drawScenario1(g2, tAndX, tAndY, bAndY);
 			}
-
+			//Second animation scenario
 			else if(latch[0] == 2)
 			{
+				if(stage == 0)
+				{
+					stage = 32;
+				}
+
 				System.out.println("SCENARIO 2");
 				drawScenario2(g2, tAndX, tAndY, bAndY);
 			}
-		}
 
+			pulse = false;
+		}
 		else
 		{
 			SRLatchHelper(g2, tAndX, tAndY, bAndY);
@@ -362,9 +381,13 @@ class MyPanel extends JPanel implements ActionListener
 	private void drawScenario1(Graphics2D g2, int tAndX, int tAndY, int bAndY)
 	{
 		drawNand(g2, tAndX, tAndY);
+		drawNand(g2, tAndX, bAndY);
 		drawIOPoint(g2, tAndX-112, tAndY+10);
+		drawIOPoint(g2, tAndX-112, bAndY+70);
+		drawIOPoint(g2, tAndX+(andWidth+202), tAndY+(andHeight/2-7));
+		drawIOPoint(g2, tAndX+(andWidth+202), bAndY+(andHeight/2-7));
 
-		if(true)
+		if(stage == 8)
 		{
 			g2.setColor(Color.green);
 			drawSeg14(g2, tAndX, bAndY);
@@ -374,30 +397,45 @@ class MyPanel extends JPanel implements ActionListener
 			drawSeg4(g2, tAndX, tAndY, bAndY);
 			drawSeg5(g2, tAndX, bAndY);
 			g2.setColor(Color.black);
+			System.out.println("S1 Stage 1");
 		}
-
 		else
 		{
-
+			drawSeg14(g2, tAndX, bAndY);
+			drawSeg1(g2, tAndX, tAndY);
+			drawSeg2(g2, tAndX, tAndY);
+			drawSeg3(g2, tAndX, tAndY);
+			drawSeg4(g2, tAndX, tAndY, bAndY);
+			drawSeg5(g2, tAndX, bAndY);
 		}
 
-		if(true)
+		if(stage == 4)
+		{
+			g2.setColor(Color.green);
+			drawSeg6(g2, tAndX, tAndY);
+			drawSeg7(g2, tAndX, tAndY);
+			g2.setColor(Color.black);
+			System.out.println("S1 Stage 2");
+		}
+		else
 		{
 			drawSeg6(g2, tAndX, tAndY);
 			drawSeg7(g2, tAndX, tAndY);
 		}
 
-		else
+		if(stage == 2)
 		{
-
+			g2.setColor(Color.green);
+			drawSeg7(g2, tAndX, tAndY);
+			drawSeg8(g2, tAndX, bAndY);
+			drawSeg9(g2, tAndX, bAndY);
+			drawSeg10(g2, tAndX, bAndY);
+			drawSeg11(g2, tAndX, tAndY, bAndY);
+			drawSeg12(g2, tAndX, tAndY);
+			g2.setColor(Color.black);
+			System.out.println("S1 Stage 3");
 		}
-
-		drawIOPoint(g2, tAndX+(andWidth+202), tAndY+(andHeight/2-7));
-
-		drawNand(g2, tAndX, bAndY);
-		drawIOPoint(g2, tAndX-112, bAndY+70);
-
-		if(true)
+		else
 		{
 			drawSeg8(g2, tAndX, bAndY);
 			drawSeg9(g2, tAndX, bAndY);
@@ -406,22 +444,20 @@ class MyPanel extends JPanel implements ActionListener
 			drawSeg12(g2, tAndX, tAndY);
 		}
 
-		else
+		if(stage == 1)
 		{
-
+			g2.setColor(Color.green);
+			drawSeg13(g2, tAndX, bAndY);
+			drawSeg14(g2, tAndX, bAndY);
+			g2.setColor(Color.black);
+			System.out.println("S1 Stage 4");
 		}
-
-		if(true)
+		else
 		{
 			drawSeg13(g2, tAndX, bAndY);
 		}
 
-		else
-		{
-
-		}
-
-		drawIOPoint(g2, tAndX+(andWidth+202), bAndY+(andHeight/2-7));
+		stage >>= 1;
 	}
 
 	private void drawScenario2(Graphics2D g2, int tAndX, int tAndY, int bAndY)
