@@ -697,7 +697,45 @@ class MyPanel extends JPanel implements ActionListener
 			notS = 1;
 			notR = 1;
 		}
-		int[] array = SRLatch(notS, notR, Q);
+		int[] array = SRLatch(notS, notR, Q);//SR array
+		int[] DFFarray = new int[array.length+2];//array to include new text
+		int j = 0;
+		for( int i =0; i < DFFarray.length; i++)//adding notS and notR to text to display
+		{
+			if( i == 1)
+			{
+				DFFarray[1] = notS;
+			}
+			else if( i == 5)
+			{
+				DFFarray[5] = notR; 
+			}
+			else
+			{
+				DFFarray[i] = array[j];
+				j++;
+			}
+			
+		}
+		return DFFarray;	
+
+	}
+	
+	public int[] TFlipFlop(int T, int Clk, int Q)
+	{
+		int D = -1;
+		if( T == 0 && Q == 0)
+		{
+			D = 1; 
+		}
+		else
+		{
+			D = 0; 
+		}
+		
+		int[] array = DFlipFlop( D, Clk, Q);
+		//need to change array inputs
 		return array;
+		
 	}
 }
