@@ -708,9 +708,9 @@ class MyPanel extends JPanel implements ActionListener
 			notR = 1;
 		}
 		int[] array = SRLatch(notS, notR, Q);//SR array
-		int[] DFFarray = new int[array.size+2];//array to include new text
+		int[] DFFarray = new int[array.length+2];//array to include new text
 		int j = 0;
-		for( int i =0; i < DFFarray.size; i++)//adding notS and notR to text to display
+		for( int i =0; i < DFFarray.length; i++)//adding notS and notR to text to display
 		{
 			if( i == 1)
 			{
