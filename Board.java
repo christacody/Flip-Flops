@@ -220,7 +220,7 @@ class MyPanel extends JPanel implements ActionListener
 		switch(mode)
 		{
 			case "SR Latch":
-				drawSRLatch(g2);
+				drawGatedSRLatch(g2);
 			break;
 
 			case "D Flip-Flop":
@@ -236,13 +236,25 @@ class MyPanel extends JPanel implements ActionListener
 		}
 	}
 
+	/** Draw Gated SR Latch onscreen */
+	public void drawGatedSRLatch(Graphics2D g2)
+	{
+		int tAndX = 300;		//Top NAND gate X coordinate
+		int tAndY = 200;		//Top NAND gate Y coordinate
+		int bAndY = tAndY+200;	//Bottom NAND gate Y coordinate
+
+		drawNand(g2, tAndX-10, tAndY-(andHeight/2-16));
+		drawNand(g2, tAndX-10, bAndY+(andHeight/2-14));
+
+		drawSRCircuit(g2, tAndX+200, tAndY, bAndY);
+	}
+
 	/** Draw S-R Latch diagram onscreen */
 	public void drawSRLatch(Graphics2D g2)
 	{
 		int tAndX = 300;		//Top NAND gate X coordinate
 		int tAndY = 200;		//Top NAND gate Y coordinate
 		int bAndY = tAndY+200;	//Bottom NAND gate Y coordinate
-		int[] latch;
 
 		Font f = new Font("Monospaced", 1, 26);
 		g2.setFont(f);
@@ -253,6 +265,20 @@ class MyPanel extends JPanel implements ActionListener
 		g2.drawString("Q", tAndX+(andWidth+218), tAndY+(andHeight/2+7));
 		g2.drawLine(tAndX+(andWidth+219), bAndY+(andHeight/2-17), tAndX+(andWidth+231), bAndY+(andHeight/2-17));
 		g2.drawString("Q", tAndX+(andWidth+218), bAndY+(andHeight/2+7));
+		drawIOPoint(g2, tAndX-112, tAndY+10);
+		drawIOPoint(g2, tAndX-112, bAndY+70);
+		drawIOPoint(g2, tAndX+(andWidth+202), tAndY+(andHeight/2-7));
+		drawIOPoint(g2, tAndX+(andWidth+202), bAndY+(andHeight/2-7));
+
+		drawSRCircuit(g2, tAndX, tAndY, bAndY);
+	}
+
+	public void drawSRCircuit(Graphics2D g2, int tAndX, int tAndY, int bAndY)
+	{
+		int[] latch;
+
+		drawNand(g2, tAndX, tAndY);
+		drawNand(g2, tAndX, bAndY);
 
 		//If stage != 0 then the animation is not complete
 		if(stage != 0)
@@ -262,7 +288,7 @@ class MyPanel extends JPanel implements ActionListener
 
 		if(pulse)
 		{
-			latch = SRLatch(1,1,1);
+			latch = SRLatch(0,1,1);
 
 			//First animation scenario
 			if(latch[0] == 1)
@@ -272,7 +298,7 @@ class MyPanel extends JPanel implements ActionListener
 					stage = 8;
 				}
 
-				drawScenario1(g2, tAndX, tAndY, bAndY);
+				drawSRScenario1(g2, tAndX, tAndY, bAndY);
 			}
 			//Second animation scenario
 			else if(latch[0] == 2)
@@ -282,8 +308,7 @@ class MyPanel extends JPanel implements ActionListener
 					stage = 32;
 				}
 
-				System.out.println("SCENARIO 2");
-				drawScenario2(g2, tAndX, tAndY, bAndY);
+				drawSRScenario2(g2, tAndX, tAndY, bAndY);
 			}
 
 			pulse = false;
@@ -349,7 +374,6 @@ class MyPanel extends JPanel implements ActionListener
 	{
 		//Top NAND & adjacent Components
 		drawNand(g2, tAndX, tAndY);
-		drawIOPoint(g2, tAndX-112, tAndY+10);
 		drawSeg1(g2, tAndX, tAndY);
 
 		drawSeg2(g2, tAndX, tAndY);
@@ -360,11 +384,9 @@ class MyPanel extends JPanel implements ActionListener
 		//Top NAND output
 		drawSeg6(g2, tAndX, tAndY);
 		drawSeg7(g2, tAndX, tAndY);
-		drawIOPoint(g2, tAndX+(andWidth+202), tAndY+(andHeight/2-7));
 
 		//Bottom NAND & adjacent components
 		drawNand(g2, tAndX, bAndY);
-		drawIOPoint(g2, tAndX-112, bAndY+70);
 		drawSeg8(g2, tAndX, bAndY);
 
 		drawSeg9(g2, tAndX, bAndY);
@@ -375,18 +397,14 @@ class MyPanel extends JPanel implements ActionListener
 		//Bottom NAND output
 		drawSeg13(g2, tAndX, bAndY);
 		drawSeg14(g2, tAndX, bAndY);
-		drawIOPoint(g2, tAndX+(andWidth+202), bAndY+(andHeight/2-7));
 	}
 
-	private void drawScenario1(Graphics2D g2, int tAndX, int tAndY, int bAndY)
+	/**
+	 * Draws the animation of the SR Latch for the fist scenario, using
+	 * $stage to determine which state to draw next
+	 */
+	private void drawSRScenario1(Graphics2D g2, int tAndX, int tAndY, int bAndY)
 	{
-		drawNand(g2, tAndX, tAndY);
-		drawNand(g2, tAndX, bAndY);
-		drawIOPoint(g2, tAndX-112, tAndY+10);
-		drawIOPoint(g2, tAndX-112, bAndY+70);
-		drawIOPoint(g2, tAndX+(andWidth+202), tAndY+(andHeight/2-7));
-		drawIOPoint(g2, tAndX+(andWidth+202), bAndY+(andHeight/2-7));
-
 		if(stage == 8)
 		{
 			g2.setColor(Color.green);
@@ -460,37 +478,31 @@ class MyPanel extends JPanel implements ActionListener
 		stage >>= 1;
 	}
 
-	private void drawScenario2(Graphics2D g2, int tAndX, int tAndY, int bAndY)
+	private void drawSRScenario2(Graphics2D g2, int tAndX, int tAndY, int bAndY)
 	{
-		//Top NAND & adjacent Components
-		drawNand(g2, tAndX, tAndY);
-		drawIOPoint(g2, tAndX-112, tAndY+10);
-		drawSeg1(g2, tAndX, tAndY);
+		if(stage == 1)
+		{
+			stage = 4;
+			drawSRScenario1(g2, tAndX, tAndY, bAndY);
+			stage = 0;
+		}
+		else if(stage == 2)
+		{
+			stage = 8;
+			drawSRScenario1(g2, tAndX, tAndY, bAndY);
+			stage = 1;
+		}
+		else if(stage > 2)
+		{
+			stage >>= 2;
+			drawSRScenario1(g2, tAndX, tAndY, bAndY);
+			stage <<= 2;
 
-		drawSeg2(g2, tAndX, tAndY);
-		drawSeg3(g2, tAndX, tAndY);
-		drawSeg4(g2, tAndX, tAndY, bAndY);
-		drawSeg5(g2, tAndX, bAndY);
-
-		//Top NAND output
-		drawSeg6(g2, tAndX, tAndY);
-		drawSeg7(g2, tAndX, tAndY);
-		drawIOPoint(g2, tAndX+(andWidth+202), tAndY+(andHeight/2-7));
-
-		//Bottom NAND & adjacent components
-		drawNand(g2, tAndX, bAndY);
-		drawIOPoint(g2, tAndX-112, bAndY+70);
-		drawSeg8(g2, tAndX, bAndY);
-
-		drawSeg9(g2, tAndX, bAndY);
-		drawSeg10(g2, tAndX, bAndY);
-		drawSeg11(g2, tAndX, tAndY, bAndY);
-		drawSeg12(g2, tAndX, tAndY);
-
-		//Bottom NAND output
-		drawSeg13(g2, tAndX, bAndY);
-		drawSeg14(g2, tAndX, bAndY);
-		drawIOPoint(g2, tAndX+(andWidth+202), bAndY+(andHeight/2-7));
+			if(stage == 0)
+			{
+				stage = 2;
+			}
+		}
 	}
 
 	private void drawSeg1(Graphics g2, int tAndX, int tAndY)
@@ -603,7 +615,7 @@ class MyPanel extends JPanel implements ActionListener
 			scenario = 1;
 			arraysize = 7;
 		}
-		else if ( notS == 0 && notR==0)
+		else if (notS == 0 && notR==0)
 		{
 			if( Q == 0)
 				scenario = 1;
@@ -630,7 +642,7 @@ class MyPanel extends JPanel implements ActionListener
 		text[1] = notQ;//text before nand representing notQ
 
 		//check notS & notQ
-		if ( notS==1 &&  notQ ==1)
+		if (notS==1 &&  notQ ==1)
 		{
 			Q = 0;
 		}
@@ -644,7 +656,7 @@ class MyPanel extends JPanel implements ActionListener
 
 		text[4] = Q; //text after nand
 		//check notR and Q
-		if ( notR==1 && Q ==1)
+		if (notR==1 && Q ==1)
 		{
 			notQ = 0;
 		}
@@ -660,7 +672,7 @@ class MyPanel extends JPanel implements ActionListener
 		{
 			text[7] = notQ;//after nand
 			//check notS & notQ
-			if( notS==1 &&  notQ ==1)
+			if(notS==1 &&  notQ ==1)
 			{
 				Q = 0;
 			}
@@ -674,8 +686,8 @@ class MyPanel extends JPanel implements ActionListener
 
 		return text;
 	}
-	
-	
+
+
 	public int[] DFlipFlop(int D, int Clk, int Q)
 	{
 		int notS = -1;
@@ -690,12 +702,12 @@ class MyPanel extends JPanel implements ActionListener
 			notS = 1;
 			notR = 0;
 		}
-		else 
+		else
 		{
 			notS = 1;
 			notR = 1;
 		}
 		int[] array = SRLatch(notS, notR, Q);
-		return array;	
+		return array;
 	}
 }
