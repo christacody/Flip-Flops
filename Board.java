@@ -94,78 +94,6 @@ public class Board
 			}
 		});
 	}
-
-	/*public Board()
-	{
-		JFrame frame = new JFrame();
-
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("Computer Architecture");
-		frame.setSize(BOARD_WIDTH, BOARD_HEIGHT);
-		frame.setLocationRelativeTo(null);
-
-		String[] opts = {"SR Latch", "D Flip-Flop", "T Flip-Flop"};
-		final JPanel comboPanel = new JPanel();
-		JLabel comboLbl = new JLabel("Examples: ");
-		JComboBox<String> examples = new JComboBox<String>(opts);
-
-		comboPanel.add(comboLbl);
-		comboPanel.add(examples);
-
-		final JPanel listPanel = new JPanel();
-		listPanel.setVisible(false);
-
-		frame.add(comboPanel, BorderLayout.NORTH);
-		frame.add(listPanel, BorderLayout.CENTER);
-
-		frame.setVisible(true);
-	}*/
-
-	/*public void paint(Graphics g)
-	{
-		super.paint(g);
-
-		g.setColor(Color.black);
-		g.fillRect(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
-
-		Toolkit.getDefaultToolkit().sync();
-		g.dispose();
-	}
-
-	public void cycle()
-	{
-
-	}
-
-	public void run()
-	{
-		long beforeTime, timeDiff, sleep;
-
-		beforeTime = System.currentTimeMillis();
-
-		while(true)
-		{
-			repaint();
-			cycle();
-
-			timeDiff = System.currentTimeMillis() - beforeTime;
-			sleep = DELAY - timeDiff;
-
-			if (sleep < 0)
-				sleep = 2;
-
-			try
-			{
-				Thread.sleep(sleep);
-			}
-			catch (InterruptedException e)
-			{
-				System.out.println("interrupted");
-			}
-
-			beforeTime = System.currentTimeMillis();
-		}
-	}*/
 }
 
 class MyPanel extends JPanel implements ActionListener
@@ -245,6 +173,18 @@ class MyPanel extends JPanel implements ActionListener
 
 		drawNand(g2, tAndX-10, tAndY-(andHeight/2-16));
 		drawNand(g2, tAndX-10, bAndY+(andHeight/2-14));
+		drawConnect(g2, tAndX-187, tAndY-(andHeight/2-24));
+		drawConnect(g2, tAndX-70, tAndY+144);
+		drawSeg15(g2, tAndX, tAndY);
+		drawSeg16(g2, tAndX, tAndY);
+		drawSeg17(g2, tAndX, tAndY, bAndY);
+		drawSeg18(g2, tAndX, bAndY);
+		drawSeg19(g2, tAndX, bAndY);
+		drawSeg20(g2, tAndX, tAndY);
+		drawSeg21(g2, tAndX, bAndY);
+		drawSeg22(g2, tAndX, tAndY, bAndY);
+		drawSeg23(g2, tAndX, tAndY);
+		drawSeg24(g2, tAndX, tAndY);
 
 		drawSRCircuit(g2, tAndX+200, tAndY, bAndY);
 	}
@@ -367,7 +307,7 @@ class MyPanel extends JPanel implements ActionListener
 	 */
 	public void drawConnect(Graphics2D g2, int x, int y)
 	{
-		g2.fillOval(x, y, 8, 8);
+		g2.fillOval(x, y, 14, 14);
 	}
 
 	private void SRLatchHelper(Graphics2D g2, int tAndX, int tAndY, int bAndY)
@@ -505,7 +445,7 @@ class MyPanel extends JPanel implements ActionListener
 		}
 	}
 
-	private void drawSeg1(Graphics g2, int tAndX, int tAndY)
+	private void drawSeg1(Graphics2D g2, int tAndX, int tAndY)
 	{
 		g2.drawLine(tAndX-100, tAndY+15, tAndX-4, tAndY+15);
 	}
@@ -574,6 +514,56 @@ class MyPanel extends JPanel implements ActionListener
 	private void drawSeg14(Graphics2D g2, int tAndX, int bAndY)
 	{
 		g2.drawLine(tAndX+(andWidth+112), bAndY+(andHeight/2-2), tAndX+(andWidth+200), bAndY+(andHeight/2-2));
+	}
+
+	private void drawSeg15(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX-220, tAndY-15, tAndX-180, tAndY-15);
+	}
+
+	private void drawSeg16(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX-180, tAndY-15, tAndX-10, tAndY-15);
+	}
+
+	private void drawSeg17(Graphics2D g2, int tAndX, int tAndY, int bAndY)
+	{
+		g2.drawLine(tAndX-180, tAndY-15, tAndX-180, bAndY+109);
+	}
+
+	private void drawSeg18(Graphics2D g2, int tAndX, int bAndY)
+	{
+		g2.drawLine(tAndX-180, bAndY+109, tAndX-100, bAndY+109);
+	}
+
+	private void drawSeg19(Graphics2D g2, int tAndX, int bAndY)
+	{
+		g2.drawLine(tAndX-100, bAndY+109, tAndX-10, bAndY+109);
+	}
+
+	private void drawSeg20(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX-220, tAndY+150, tAndX-62, tAndY+150);
+	}
+
+	private void drawSeg21(Graphics2D g2, int tAndX, int bAndY)
+	{
+		g2.drawLine(tAndX-62, bAndY+46, tAndX-10, bAndY+46);
+	}
+
+	private void drawSeg22(Graphics2D g2, int tAndX, int tAndY, int bAndY)
+	{
+		g2.drawLine(tAndX-62, bAndY+46, tAndX-62, tAndY+150);
+	}
+
+	private void drawSeg23(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX-62, tAndY+46, tAndX-62, tAndY+150);
+	}
+
+	private void drawSeg24(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX-62, tAndY+46, tAndX-10, tAndY+46);
 	}
 
 	/**
