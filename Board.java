@@ -227,6 +227,8 @@ class MyPanel extends JPanel implements ActionListener
 		g2.drawString("S", tAndX+170, tAndY-(andHeight/2-50));
 		g2.drawString("R", tAndX+170, bAndY+(andHeight/2+60));
 		g2.drawString("D", tAndX-250, tAndY-6);
+		g2.drawString("Q", tAndX+(andWidth+418), tAndY+(andHeight/2+7));
+		g2.drawString("Q", tAndX+(andWidth+418), bAndY+(andHeight/2+7));
 		g2.drawString("Clk", tAndX-270, tAndY+158);
 
 		drawNand(g2, tAndX-10, tAndY-(andHeight/2-16));
@@ -234,6 +236,52 @@ class MyPanel extends JPanel implements ActionListener
 		drawNotGate(g2, tAndX-130, bAndY+89);
 		drawConnect(g2, tAndX-187, tAndY-(andHeight/2-24));
 		drawConnect(g2, tAndX-70, tAndY+144);
+
+		f = new Font("Monospaced", 1, 16);
+		g2.setFont(f);
+
+		if(stage == 0)
+		{
+			drawDClk(g2, tAndX, tAndY);
+			drawS(g2, tAndX+306, tAndY-60);
+			drawR(g2, tAndX+306, bAndY+120);
+
+			if(q == true && q2 == true)
+			{
+				g2.setColor(Color.red);
+			}
+
+			drawQ(g2, tAndX+200, tAndY);
+			drawNotQ(g2, tAndX+200, bAndY);
+			g2.setColor(Color.black);
+		}
+		else if(stage == 1 || stage == 16)
+		{
+			drawDClk(g2, tAndX, tAndY);
+			drawSR(g2, tAndX+200, tAndY, bAndY);
+
+			updateQ();
+			drawQ(g2, tAndX+200, tAndY);
+
+			drawNotQ(g2, tAndX+200, bAndY);
+		}
+		else if(stage == 4)
+		{
+			drawDClk(g2, tAndX, tAndY);
+			drawSR(g2, tAndX+200, tAndY, bAndY);
+
+			updateNotQ();
+			drawNotQ(g2, tAndX+200, bAndY);
+
+			drawQ(g2, tAndX+200, tAndY);
+		}
+		else
+		{
+			drawDClk(g2, tAndX, tAndY);
+			drawSR(g2, tAndX+200, tAndY, bAndY);
+			drawQ(g2, tAndX+200, tAndY);
+			drawNotQ(g2, tAndX+200, bAndY);
+		}
 
 		SRLatchHelper(g2, tAndX+200, tAndY, bAndY);
 		drawDCircuit(g2, tAndX, tAndY, bAndY);
@@ -812,6 +860,27 @@ class MyPanel extends JPanel implements ActionListener
 		}
 	}
 
+	private void drawDClk(Graphics2D g2, int tAndX, int tAndY)
+	{
+		if(d)
+		{
+			g2.drawString("1", tAndX-133, tAndY+40);
+		}
+		else
+		{
+			g2.drawString("0", tAndX-133, tAndY+40);
+		}
+
+		if(clk)
+		{
+			g2.drawString("1", tAndX-133, tAndY+198);
+		}
+		else
+		{
+			g2.drawString("0", tAndX-133, tAndY+198);
+		}
+	}
+
 	private void drawSR(Graphics2D g2, int tAndX, int tAndY, int bAndY)
 	{
 		if(s)
@@ -830,6 +899,30 @@ class MyPanel extends JPanel implements ActionListener
 		else
 		{
 			g2.drawString("0", tAndX-133, bAndY+98);
+		}
+	}
+
+	private void drawS(Graphics2D g2, int x, int y)
+	{
+		if(s)
+		{
+			g2.drawString("1", x-133, y+40);
+		}
+		else
+		{
+			g2.drawString("0", x-133, y+40);
+		}
+	}
+
+	private void drawR(Graphics2D g2, int x, int y)
+	{
+		if(r)
+		{
+			g2.drawString("1", x-133, y+40);
+		}
+		else
+		{
+			g2.drawString("0", x-133, y+40);
 		}
 	}
 
