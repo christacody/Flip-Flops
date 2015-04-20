@@ -233,6 +233,9 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 				if(stage == 1)
 					stall = true;
 				tff.setPulse(pulse);
+				
+
+				
 				int T,Clk,Q;
 				if( t == true)
 					T = 1;
@@ -246,8 +249,17 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 					Q = 1;
 				else
 					Q = 0;
-
 				int[] tffarray = TFlipFlop(T,Clk,Q);
+				if(stage == 1)
+				{
+					Q = tffarray[2];
+					if(Q == 1)
+						q = true;
+					else 
+						q = false;
+				}
+				
+				
 				tff.drawTFlipFlop(g2, T, Clk, Q, tffarray);
 				//need to add logic for updating values, and setting array
 				pulse = false;
