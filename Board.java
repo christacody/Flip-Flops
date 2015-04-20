@@ -723,6 +723,9 @@ class MyPanel extends JPanel implements ActionListener
 	
 	public int[] TFlipFlop(int T, int Clk, int Q)
 	{
+		int[] TFFarray = new int[4];
+		TFFarray[0] = Q; 
+		
 		int D = -1;
 		if( T == 0 && Q == 0)
 		{
@@ -733,9 +736,22 @@ class MyPanel extends JPanel implements ActionListener
 			D = 0; 
 		}
 		
-		int[] array = DFlipFlop( D, Clk, Q);
-		//need to change array inputs
-		return array;
+		TFFarray[1] = D;
+		
+		int[] array = DFlipFlop(D, Clk, Q);
+		
+		if(array.length == 9)
+		{
+			TFFarray[2] = array[4];
+			TFFarray[3] = array[8];
+		}
+		else
+		{
+			TFFarray[2] = array[11];
+			TFFarray[3] = array[8];
+		}
+		
+		return TFFarray;
 		
 	}
 }
