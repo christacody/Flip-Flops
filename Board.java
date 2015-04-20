@@ -91,7 +91,7 @@ public class Board
 	}
 }
 
-class MyPanel extends JPanel implements ActionListener, KeyListener
+class MyPanel extends JPanel implements ActionListener
 {
 	private String mode = "SR Latch";	//Determines which diagram is shown
 	private int andWidth = 40;			//Width of the AND/NAND gates
@@ -142,7 +142,6 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 			}
 		};
 
-		addKeyListener(this);
 
 		new Timer(delay, drawDelay).start();
 		//true - 1 false - 0
@@ -166,11 +165,6 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 	{
 		mode = newMode;
 		super.repaint();
-	}
-
-	public void keyPressed()
-	{
-
 	}
 
 	/** Paint diagram to JPanel */
