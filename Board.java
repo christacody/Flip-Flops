@@ -152,8 +152,6 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 						repaint();
 					}
 				}
-
-
 			}
 		};
 
@@ -252,9 +250,19 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 				g.drawString(mode, 10, 20);
 		}
 
-		if(stage != 0)
+		if(mode == "SR Latch" || mode == "D Flip-Flop")
 		{
-			requestFocus();
+			if(stage != 0)
+			{
+				requestFocus();
+			}
+		}
+		else if(mode == "T Flip-Flop")
+		{
+			if(tff.getStage() != 0)
+			{
+				requestFocus();
+			}
 		}
 	}
 
