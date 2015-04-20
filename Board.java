@@ -107,9 +107,33 @@ class MyPanel extends JPanel implements ActionListener
 	private int delay = 600;			//Determines how often diagram is repainted
 	private BasicStroke defaultStroke;	//Default line thickness
 
+		
 	/** Constructor: Set border color to black */
 	public MyPanel()
 	{
+	    /*Code to check functionality of Dflipflop
+		int[] array = DFlipFlop(1,1,1);
+		int[] array2 = DFlipFlop(1,1,0);
+		int[] array3 = DFlipFlop(1,0,0);
+		int[] array4 = DFlipFlop(1,0,1);
+		int[] array5 = DFlipFlop(0,1,1);
+		int[] array6 = DFlipFlop(0,0,1);
+		int[] array7 = DFlipFlop(0,1,0);
+		int[] array8 = DFlipFlop(0,0,0);
+		System.out.println(java.util.Arrays.toString(array3));*/
+		/*code to test tflipflop
+		int[] array = TFlipFlop(1,1,1);
+		int[] array2 = TFlipFlop(1,1,0);
+		int[] array3 = TFlipFlop(1,0,0);
+		int[] array4 = TFlipFlop(1,0,1);
+		int[] array5 = TFlipFlop(0,1,1);
+		int[] array6 = TFlipFlop(0,0,1);
+		int[] array7 = TFlipFlop(0,1,0);
+		int[] array8 = TFlipFlop(0,0,0);
+		System.out.println(java.util.Arrays.toString(array5));*/
+		
+		
+		
 		setBorder(BorderFactory.createLineBorder(Color.black));
 		defaultStroke = new BasicStroke(lineThickness);
 
@@ -608,9 +632,15 @@ class MyPanel extends JPanel implements ActionListener
 		else if (notS == 0 && notR==0)
 		{
 			if( Q == 0)
+			{
 				scenario = 1;
+				arraysize = 7;
+			}
 			else
+			{
 				scenario = 2;
+				arraysize = 10;
+			}
 		}
 		else
 		{
