@@ -91,7 +91,7 @@ public class Board
 	}
 }
 
-class MyPanel extends JPanel implements ActionListener
+class MyPanel extends JPanel implements ActionListener, KeyListener
 {
 	private String mode = "SR Latch";	//Determines which diagram is shown
 	private int andWidth = 40;			//Width of the AND/NAND gates
@@ -135,9 +135,14 @@ class MyPanel extends JPanel implements ActionListener
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				repaint();
+				if(stage == 0)
+				{
+					repaint();
+				}
 			}
 		};
+
+		addKeyListener(this);
 
 		new Timer(delay, drawDelay).start();
 		//true - 1 false - 0
@@ -161,6 +166,11 @@ class MyPanel extends JPanel implements ActionListener
 	{
 		mode = newMode;
 		super.repaint();
+	}
+
+	public void keyPressed()
+	{
+
 	}
 
 	/** Paint diagram to JPanel */
@@ -269,6 +279,28 @@ class MyPanel extends JPanel implements ActionListener
 
 			drawQ(g2, tAndX+200, tAndY);
 		}
+		else if(stage == 64)
+		{
+			drawDClk(g2, tAndX-114, tAndY-30);
+			drawS(g2, tAndX+306, tAndY-68);
+
+			updateR();
+			drawR(g2, tAndX+306, bAndY+94);
+
+			drawNotQ(g2, tAndX+200, bAndY);
+			drawQ(g2, tAndX+200, tAndY);
+		}
+		else if(stage == 256)
+		{
+			drawDClk(g2, tAndX-114, tAndY-30);
+
+			updateS();
+			drawS(g2, tAndX+306, tAndY-68);
+
+			drawR(g2, tAndX+306, bAndY+94);
+			drawNotQ(g2, tAndX+200, bAndY);
+			drawQ(g2, tAndX+200, tAndY);
+		}
 		else
 		{
 			drawDClk(g2, tAndX-114, tAndY-30);
@@ -321,6 +353,8 @@ class MyPanel extends JPanel implements ActionListener
 			}
 
 			latch = DFlipFlop(sendD, sendClk, sendQ);
+
+			System.out.println("Scenario: " + latch[0]);
 
 			//First animation scenario
 			if(latch[0] == 1)
@@ -437,34 +471,37 @@ class MyPanel extends JPanel implements ActionListener
 		{
 			int sendS, sendR, sendQ;
 
-			if(s)
+			if(stage < 64)
 			{
-				sendS = 1;
-			}
-			else
-			{
-				sendS = 0;
-			}
+				if(s)
+				{
+					sendS = 1;
+				}
+				else
+				{
+					sendS = 0;
+				}
 
-			if(r)
-			{
-				sendR = 1;
-			}
-			else
-			{
-				sendR = 0;
-			}
+				if(r)
+				{
+					sendR = 1;
+				}
+				else
+				{
+					sendR = 0;
+				}
 
-			if(q)
-			{
-				sendQ = 1;
-			}
-			else
-			{
-				sendQ = 0;
-			}
+				if(q)
+				{
+					sendQ = 1;
+				}
+				else
+				{
+					sendQ = 0;
+				}
 
-			latch = SRLatch(sendS, sendR, sendQ);
+				latch = SRLatch(sendS, sendR, sendQ);
+			}
 
 			//First animation scenario
 			if(latch[0] == 1)
@@ -615,8 +652,6 @@ class MyPanel extends JPanel implements ActionListener
 
 	private void drawDScenario(Graphics2D g2, int tAndX, int tAndY, int bAndY)
 	{
-		System.out.println(stage);
-
 		if(stage == 512)
 		{
 			g2.setColor(Color.green);
@@ -803,6 +838,30 @@ class MyPanel extends JPanel implements ActionListener
 			{
 				stage = 2;
 			}
+		}
+	}
+
+	private void updateS()
+	{
+		if(latch[1] == 1)
+		{
+			s = true;
+		}
+		else
+		{
+			s = false;
+		}
+	}
+
+	private void updateR()
+	{
+		if(latch[4] == 1)
+		{
+			r = true;
+		}
+		else
+		{
+			r = false;
 		}
 	}
 
@@ -1153,7 +1212,7 @@ class MyPanel extends JPanel implements ActionListener
 				{
 					d = !d;
 				}
-				else if(mode == "T FLip-Flop")
+				else if(mode == "T Flip-Flop")
 				{
 					t = !t;
 				}
