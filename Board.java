@@ -29,8 +29,8 @@ import java.util.Arrays;
 
 public class Board
 {
-	private static final int BOARD_WIDTH = 840;
-	private static final int BOARD_HEIGHT = 800;
+	private static final int BOARD_WIDTH = 1000;
+	private static final int BOARD_HEIGHT = 600;
 	private final int DELAY = 6;
 
 	public static void main(String[] args)
@@ -49,6 +49,7 @@ public class Board
 	{
 		JFrame frame = new JFrame();
 
+		frame.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Computer Architecture");
 		frame.setLocationRelativeTo(null);
@@ -215,8 +216,8 @@ class MyPanel extends JPanel implements ActionListener
 	/** Draw Gated SR Latch onscreen */
 	public void drawGatedDLatch(Graphics2D g2)
 	{
-		int tAndX = 300;		//Top NAND gate X coordinate
-		int tAndY = 200;		//Top NAND gate Y coordinate
+		int tAndX = 400;		//Top NAND gate X coordinate
+		int tAndY = 100;		//Top NAND gate Y coordinate
 		int bAndY = tAndY+200;	//Bottom NAND gate Y coordinate
 
 		Font f = new Font("Monospaced", 1, 26);
@@ -281,7 +282,7 @@ class MyPanel extends JPanel implements ActionListener
 			{
 				if(stage == 0)
 				{
-					stage = 128;
+					stage = 512;
 				}
 			}
 
@@ -314,8 +315,8 @@ class MyPanel extends JPanel implements ActionListener
 	/** Draw S-R Latch diagram onscreen */
 	public void drawSRLatch(Graphics2D g2)
 	{
-		int tAndX = 300;		//Top NAND gate X coordinate
-		int tAndY = 200;		//Top NAND gate Y coordinate
+		int tAndX = 400;		//Top NAND gate X coordinate
+		int tAndY = 100;		//Top NAND gate Y coordinate
 		int bAndY = tAndY+200;	//Bottom NAND gate Y coordinate
 
 		Font f = new Font("Monospaced", 1, 26);
@@ -449,7 +450,7 @@ class MyPanel extends JPanel implements ActionListener
 		}
 	}
 
-	
+
     public void drawTFlipFlop(Graphics2D g2)
 	{
 		int xXOR = 150;
@@ -550,7 +551,7 @@ class MyPanel extends JPanel implements ActionListener
 	{
 		System.out.println(stage);
 
-		if(stage == 128)
+		if(stage == 512)
 		{
 			g2.setColor(Color.green);
 			drawSeg15(g2, tAndX, tAndY);
@@ -571,18 +572,14 @@ class MyPanel extends JPanel implements ActionListener
 			drawSeg24(g2, tAndX, tAndY);
 		}
 
-		if(stage == 64)
+		if(stage == 256)
 		{
-			System.out.println("DRAWSEG1");
 			g2.setColor(Color.green);
 			drawSeg1(g2, tAndX+200, tAndY);
 			g2.setColor(Color.black);
 		}
-		else
-		{
-		}
 
-		if(stage == 32)
+		if(stage == 128)
 		{
 			g2.setColor(Color.green);
 			drawSeg20(g2, tAndX, tAndY);
@@ -603,15 +600,11 @@ class MyPanel extends JPanel implements ActionListener
 			drawSeg19(g2, tAndX, bAndY);
 		}
 
-		if(stage == 16)
+		if(stage == 64)
 		{
 			g2.setColor(Color.green);
 			drawSeg8(g2, tAndX+200, bAndY);
 			g2.setColor(Color.black);
-		}
-		else
-		{
-			drawSeg8(g2, tAndX+200, bAndY);
 		}
 	}
 
@@ -664,17 +657,7 @@ class MyPanel extends JPanel implements ActionListener
 		}
 		else
 		{
-			if(stage == 64)
-			{
-				g2.setColor(Color.green);
-				drawSeg1(g2, tAndX, tAndY);
-				g2.setColor(Color.black);
-			}
-			else
-			{
-				drawSeg1(g2, tAndX, tAndY);
-			}
-
+			drawSeg1(g2, tAndX, tAndY);
 			drawSeg14(g2, tAndX, bAndY);
 			drawSeg2(g2, tAndX, tAndY);
 			drawSeg3(g2, tAndX, tAndY);
@@ -708,11 +691,7 @@ class MyPanel extends JPanel implements ActionListener
 		}
 		else
 		{
-			if(stage != 16)
-			{
-				drawSeg8(g2, tAndX, bAndY);
-			}
-
+			drawSeg8(g2, tAndX, bAndY);
 			drawSeg9(g2, tAndX, bAndY);
 			drawSeg10(g2, tAndX, bAndY);
 			drawSeg11(g2, tAndX, tAndY, bAndY);
@@ -1024,7 +1003,7 @@ class MyPanel extends JPanel implements ActionListener
 	{
 		g2.drawLine(tAndX+120, tAndY+35, tAndX+200, tAndY+35);
 	}
-	
+
 	/**
 	 * If input is received, set pulse to integer & bit shift by 1 upon
 	 * each subsequent call until pulse == 0 to signal animation
