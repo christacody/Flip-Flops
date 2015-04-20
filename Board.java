@@ -102,7 +102,7 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 	private int stage = 0;				//Indicates stage of diagram to be drawn next
 	private int delay = 1600;			//Determines how often diagram is repainted
 	private BasicStroke defaultStroke;	//Default line thickness
-	private boolean s, r, q, q2, d, clk, t;
+	private boolean s, r, q, q2, d, clk, t, stall;
 	private TFlipFlop tff;
 	private int[] latch;
 	JButton but, butS, butR, butQ;
@@ -140,14 +140,14 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 			{
 				if(mode == "SR Latch" || mode == "D Flip-Flop")
 				{
-					if(stage == 0)
+					if(stage == 0 && !stall)
 					{
 						repaint();
 					}
 				}
 				else if(mode == "T Flip-Flop")
 				{
-					if(tff.getStage() == 0)
+					if(tff.getStage() == 0 && !stall)
 					{
 						repaint();
 					}
@@ -190,6 +190,11 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 	public void keyReleased(KeyEvent e)
 	{
 		repaint();
+
+		if(stall)
+		{
+			stall = false;
+		}
 	}
 	public void keyPressed(KeyEvent e) { }
 
@@ -223,6 +228,8 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 				int stage = tff.getStage();
 				if(stage != 0)
 					pulse = true;
+				if(stage == 1)
+					stall = true;
 				tff.setPulse(pulse);
 				
 
@@ -444,7 +451,15 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 
 			drawDScenario(g2, tAndX, tAndY, bAndY);
 
-			stage >>= 1;
+			if(stage == 1)
+			{
+				stage >>= 1;
+				stall = true;
+			}
+			else
+			{
+				stage >>= 1;
+			}
 
 			pulse = false;
 		}
@@ -868,6 +883,8 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 			drawSeg13(g2, tAndX, bAndY);
 			drawSeg14(g2, tAndX, bAndY);
 			g2.setColor(Color.black);
+
+			stall = true;
 		}
 		else
 		{
@@ -884,6 +901,8 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 			stage = 4;
 			drawSRScenario1(g2, tAndX, tAndY, bAndY);
 			stage = 0;
+
+			stall = true;
 		}
 		else if(stage == 2)
 		{
