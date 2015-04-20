@@ -98,9 +98,9 @@ class MyPanel extends JPanel implements ActionListener
 	private int lineThickness = 4;		//Thickness of lines drawn
 	private boolean pulse = false;		//Indicates pulse to be drawn on diagram
 	private int stage = 0;				//Indicates stage of diagram to be drawn next
-	private int delay = 600;			//Determines how often diagram is repainted
+	private int delay = 1600;			//Determines how often diagram is repainted
 	private BasicStroke defaultStroke;	//Default line thickness
-	private boolean s, r, q, q2;
+	private boolean s, r, q, q2, d, clk;
 	private int[] latch;
 	JButton but, butS, butR, butQ;
 
@@ -164,6 +164,8 @@ class MyPanel extends JPanel implements ActionListener
 		r = false;
 		q = true;
 		q2 = false;
+		d = false;
+		clk = false;
 	}
 
 	/** Returns preferred size */
@@ -189,10 +191,14 @@ class MyPanel extends JPanel implements ActionListener
 		switch(mode)
 		{
 			case "SR Latch":
+				butS.setText("S");
+				butR.setText("R");
 				drawSRLatch(g2);
 			break;
 
 			case "D Flip-Flop":
+				butS.setText("D");
+				butR.setText("Clk");
 				drawGatedDLatch(g2);
 			break;
 
@@ -224,28 +230,79 @@ class MyPanel extends JPanel implements ActionListener
 		drawNotGate(g2, tAndX-130, bAndY+89);
 		drawConnect(g2, tAndX-187, tAndY-(andHeight/2-24));
 		drawConnect(g2, tAndX-70, tAndY+144);
-		drawDCircuit();
 
-		drawSRCircuit(g2, tAndX+200, tAndY, bAndY);
+		SRLatchHelper(g2, tAndX+200, tAndY, bAndY);
+		drawDCircuit(g2, tAndX, tAndY, bAndY);
 	}
 
-	public void drawDCircuit()
+	public void drawDCircuit(Graphics2D g2, int tAndX, int tAndY, int bAndY)
 	{
 		if(stage != 0)
 		{
 			pulse = true;
 		}
 
-		drawSeg15(g2, tAndX, tAndY);
-		drawSeg16(g2, tAndX, tAndY);
-		drawSeg17(g2, tAndX, tAndY, bAndY);
-		drawSeg18(g2, tAndX, bAndY);
-		drawSeg19(g2, tAndX, bAndY);
-		drawSeg20(g2, tAndX, tAndY);
-		drawSeg21(g2, tAndX, bAndY);
-		drawSeg22(g2, tAndX, tAndY, bAndY);
-		drawSeg23(g2, tAndX, tAndY);
-		drawSeg24(g2, tAndX, tAndY);
+		if(pulse)
+		{
+			int sendD, sendClk, sendQ;
+
+			if(d)
+			{
+				sendD = 1;
+			}
+			else
+			{
+				sendD = 0;
+			}
+
+			if(clk)
+			{
+				sendClk = 1;
+			}
+			else
+			{
+				sendClk = 0;
+			}
+
+			if(q)
+			{
+				sendQ = 1;
+			}
+			else
+			{
+				sendQ = 0;
+			}
+
+			latch = DFlipFlop(sendD, sendClk, sendQ);
+
+			//First animation scenario
+			if(latch[0] == 1)
+			{
+				if(stage == 0)
+				{
+					stage = 128;
+				}
+			}
+
+			//Second animation scenario
+			else if(latch[0] == 2)
+			{
+				if(stage == 0)
+				{
+					stage = 512;
+				}
+			}
+
+			drawSRCircuit(g2, tAndX+200, tAndY, bAndY);
+
+			drawDScenario(g2, tAndX, tAndY, bAndY);
+
+			pulse = false;
+		}
+		else
+		{
+			DLatchHelper(g2, tAndX, tAndY, bAndY);
+		}
 	}
 
 	/** Draw S-R Latch diagram onscreen */
@@ -451,6 +508,92 @@ class MyPanel extends JPanel implements ActionListener
 		g2.fillOval(x, y, 14, 14);
 	}
 
+	/** Draws bare D Latch circuit */
+	private void DLatchHelper(Graphics2D g2, int tAndX, int tAndY, int bAndY)
+	{
+		drawSeg15(g2, tAndX, tAndY);
+		drawSeg16(g2, tAndX, tAndY);
+		drawSeg17(g2, tAndX, tAndY, bAndY);
+		drawSeg18(g2, tAndX, bAndY);
+		drawSeg19(g2, tAndX, bAndY);
+		drawSeg20(g2, tAndX, tAndY);
+		drawSeg21(g2, tAndX, bAndY);
+		drawSeg22(g2, tAndX, tAndY);
+		drawSeg23(g2, tAndX, tAndY);
+		drawSeg24(g2, tAndX, tAndY);
+		drawSeg25(g2, tAndX, tAndY, bAndY);
+	}
+
+	private void drawDScenario(Graphics2D g2, int tAndX, int tAndY, int bAndY)
+	{
+		System.out.println(stage);
+
+		if(stage == 128)
+		{
+			g2.setColor(Color.green);
+			drawSeg15(g2, tAndX, tAndY);
+			drawSeg16(g2, tAndX, tAndY);
+			drawSeg20(g2, tAndX, tAndY);
+			drawSeg22(g2, tAndX, tAndY);
+			drawSeg23(g2, tAndX, tAndY);
+			drawSeg24(g2, tAndX, tAndY);
+			g2.setColor(Color.black);
+		}
+		else
+		{
+			drawSeg15(g2, tAndX, tAndY);
+			drawSeg16(g2, tAndX, tAndY);
+			drawSeg20(g2, tAndX, tAndY);
+			drawSeg22(g2, tAndX, tAndY);
+			drawSeg23(g2, tAndX, tAndY);
+			drawSeg24(g2, tAndX, tAndY);
+		}
+
+		if(stage == 64)
+		{
+			System.out.println("DRAWSEG1");
+			g2.setColor(Color.green);
+			drawSeg1(g2, tAndX+200, tAndY);
+			g2.setColor(Color.black);
+		}
+		else
+		{
+		}
+
+		if(stage == 32)
+		{
+			g2.setColor(Color.green);
+			drawSeg20(g2, tAndX, tAndY);
+			drawSeg21(g2, tAndX, bAndY);
+			drawSeg25(g2, tAndX, tAndY, bAndY);
+			drawSeg15(g2, tAndX, tAndY);
+			drawSeg17(g2, tAndX, tAndY, bAndY);
+			drawSeg18(g2, tAndX, bAndY);
+			drawSeg19(g2, tAndX, bAndY);
+			g2.setColor(Color.black);
+		}
+		else
+		{
+			drawSeg21(g2, tAndX, bAndY);
+			drawSeg25(g2, tAndX, tAndY, bAndY);
+			drawSeg17(g2, tAndX, tAndY, bAndY);
+			drawSeg18(g2, tAndX, bAndY);
+			drawSeg19(g2, tAndX, bAndY);
+		}
+
+		if(stage == 16)
+		{
+			g2.setColor(Color.green);
+			drawSeg8(g2, tAndX+200, bAndY);
+			g2.setColor(Color.black);
+		}
+		else
+		{
+			drawSeg8(g2, tAndX+200, bAndY);
+		}
+	}
+
+	/** Draws bare SR Latch circuit */
 	private void SRLatchHelper(Graphics2D g2, int tAndX, int tAndY, int bAndY)
 	{
 		//Top NAND & adjacent Components
@@ -499,8 +642,18 @@ class MyPanel extends JPanel implements ActionListener
 		}
 		else
 		{
+			if(stage == 64)
+			{
+				g2.setColor(Color.green);
+				drawSeg1(g2, tAndX, tAndY);
+				g2.setColor(Color.black);
+			}
+			else
+			{
+				drawSeg1(g2, tAndX, tAndY);
+			}
+
 			drawSeg14(g2, tAndX, bAndY);
-			drawSeg1(g2, tAndX, tAndY);
 			drawSeg2(g2, tAndX, tAndY);
 			drawSeg3(g2, tAndX, tAndY);
 			drawSeg4(g2, tAndX, tAndY, bAndY);
@@ -533,7 +686,11 @@ class MyPanel extends JPanel implements ActionListener
 		}
 		else
 		{
-			drawSeg8(g2, tAndX, bAndY);
+			if(stage != 16)
+			{
+				drawSeg8(g2, tAndX, bAndY);
+			}
+
 			drawSeg9(g2, tAndX, bAndY);
 			drawSeg10(g2, tAndX, bAndY);
 			drawSeg11(g2, tAndX, tAndY, bAndY);
@@ -785,9 +942,9 @@ class MyPanel extends JPanel implements ActionListener
 		g2.drawLine(tAndX-62, bAndY+46, tAndX-10, bAndY+46);
 	}
 
-	private void drawSeg22(Graphics2D g2, int tAndX, int tAndY, int bAndY)
+	private void drawSeg22(Graphics2D g2, int tAndX, int tAndY)
 	{
-		g2.drawLine(tAndX-62, bAndY+46, tAndX-62, tAndY+150);
+		g2.drawLine(tAndX-62, tAndY+150, tAndX-62, tAndY+98);
 	}
 
 	private void drawSeg23(Graphics2D g2, int tAndX, int tAndY)
@@ -798,6 +955,11 @@ class MyPanel extends JPanel implements ActionListener
 	private void drawSeg24(Graphics2D g2, int tAndX, int tAndY)
 	{
 		g2.drawLine(tAndX-62, tAndY+46, tAndX-10, tAndY+46);
+	}
+
+	private void drawSeg25(Graphics2D g2, int tAndX, int tAndY, int bAndY)
+	{
+		g2.drawLine(tAndX-62, tAndY+150, tAndX-62, bAndY+46);
 	}
 
 	/**
