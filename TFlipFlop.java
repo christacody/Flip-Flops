@@ -99,6 +99,12 @@ public class TFlipFlop{
 				drawSegT5(g2, x, y);
 				drawSegT7(g2, x, y);
 				g2.setColor(Color.black);
+				g2.setFont(num);
+				g2.drawString(t, xXOR-95, yXOR+75);
+				g2.drawString(clk, xXOR-95, yXOR+225);
+				g2.drawString(q, xXOR+620, yXOR+35);
+				g2.drawString(notq, xXOR+620, yXOR+200);
+				g2.setFont(f);
 				
 			}
 			else
