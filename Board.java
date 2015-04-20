@@ -188,12 +188,28 @@ class MyPanel extends JPanel implements ActionListener
 			case "T Flip-Flop":
 				butS.setText("T");
 				butR.setText("Clk");
-				TFlipFlop t = new TFlipFlop();
-				int stage = t.getStage();
+				TFlipFlop tff = new TFlipFlop();
+				int stage = tff.getStage();
 				if(stage != 0)
 					pulse = true;
-				t.setPulse(pulse);
-				t.drawTFlipFlop(g2);
+				tff.setPulse(pulse);
+				int T,Clk,Q;
+				if( t == true)
+					T = 1;
+				else
+					T = 0;
+				if( clk == true)
+					Clk = 1;
+				else
+					Clk = 0;
+				if( q == true)
+					Q = 1;
+				else
+					Q = 0;
+					
+				int[] tffarray = TFlipFlop(T,Clk,Q);
+				tff.drawTFlipFlop(g2, T, Clk, Q, tffarray);
+				//need to add logic for updating values, and setting array
 				pulse = false;
 
 
@@ -1321,8 +1337,7 @@ class MyPanel extends JPanel implements ActionListener
 		return DFFarray;
 
 	}
-
-	public int[] TFlipFlop(int T, int Clk, int Q)
+		public int[] TFlipFlop(int T, int Clk, int Q)
 	{
 		int[] TFFarray = new int[4];
 		TFFarray[0] = Q;
@@ -1359,3 +1374,5 @@ class MyPanel extends JPanel implements ActionListener
 		return TFFarray;
 	}
 }
+
+	

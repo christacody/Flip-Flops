@@ -16,13 +16,26 @@ public class TFlipFlop{
 	{
 		
 	}
-	public void drawTFlipFlop(Graphics2D g2)
+	
+	public void drawTFlipFlop(Graphics2D g2, int T, int Clk, int Q, int[] array)
 	{
+		String notq = "";
+		if(Q ==1)
+			notq = "0";
+		else
+			notq = "1";
+		
+		String t = Integer.toString(T); 
+		String clk = Integer.toString(Clk);
+		String q = Integer.toString(Q);
+		
 		int xXOR = 250;
 		int yXOR = 200;
 		Font f = new Font("Monospaced", 1, 26);
+		Font num = new Font("Monospaced", 1, 16);
 		g2.setColor(Color.black);
 		g2.setFont(f);
+		
 		g2.drawString("T", xXOR-100, yXOR+53);
 		g2.drawString("Clk", xXOR-125, yXOR+205);
 		g2.drawString("D", xXOR+205, yXOR+35);
@@ -46,7 +59,13 @@ public class TFlipFlop{
 		drawSegT10(g2, xXOR, yXOR);
 		drawXOR(g2, xXOR, yXOR);
 		
-		
+		g2.setFont(num);
+		g2.drawString(t, xXOR-95, yXOR+75);
+		g2.drawString(clk, xXOR-95, yXOR+225);
+		g2.drawString(q, xXOR+620, yXOR+35);
+		g2.drawString(notq, xXOR+620, yXOR+200);
+		g2.setFont(f);
+	
 		drawTFFanimation(g2, xXOR, yXOR);
 	}
 	public int getStage()
@@ -63,7 +82,6 @@ public class TFlipFlop{
 		  if(pulse && stage == 0)
 		  {
 				stage = 3; 
-				//pulse = false;
 				System.out.println("test");
 				System.out.println(stage);	
 		  }
@@ -194,4 +212,6 @@ public class TFlipFlop{
 		g2.drawArc(x-12, y, 30, 75, 270, 180);
 	}
 	
+
 }
+	
