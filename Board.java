@@ -187,6 +187,7 @@ class MyPanel extends JPanel implements ActionListener
 	{
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setStroke(new BasicStroke(lineThickness));
+		g2.setColor(Color.black);
 		super.paintComponent(g);
 
 		switch(mode)
@@ -224,10 +225,13 @@ class MyPanel extends JPanel implements ActionListener
 
 		Font f = new Font("Monospaced", 1, 26);
 		g2.setFont(f);
+		g2.drawLine(tAndX+174, tAndY-(andHeight/2-26), tAndX+182, tAndY-(andHeight/2-26));
 		g2.drawString("S", tAndX+170, tAndY-(andHeight/2-50));
-		g2.drawString("R", tAndX+170, bAndY+(andHeight/2+60));
+		g2.drawLine(tAndX+174, bAndY+(andHeight/2+46), tAndX+182, bAndY+(andHeight/2+46));
+		g2.drawString("R", tAndX+170, bAndY+(andHeight/2+70));
 		g2.drawString("D", tAndX-250, tAndY-6);
 		g2.drawString("Q", tAndX+(andWidth+418), tAndY+(andHeight/2+7));
+		g2.drawLine(tAndX+(andWidth+421), bAndY+(andHeight/2-17), tAndX+(andWidth+429), bAndY+(andHeight/2-17));
 		g2.drawString("Q", tAndX+(andWidth+418), bAndY+(andHeight/2+7));
 		g2.drawString("Clk", tAndX-270, tAndY+158);
 
@@ -242,9 +246,9 @@ class MyPanel extends JPanel implements ActionListener
 
 		if(stage == 0)
 		{
-			drawDClk(g2, tAndX, tAndY);
-			drawS(g2, tAndX+306, tAndY-60);
-			drawR(g2, tAndX+306, bAndY+120);
+			drawDClk(g2, tAndX-114, tAndY-30);
+			drawS(g2, tAndX+306, tAndY-68);
+			drawR(g2, tAndX+306, bAndY+94);
 
 			if(q == true && q2 == true)
 			{
@@ -257,8 +261,9 @@ class MyPanel extends JPanel implements ActionListener
 		}
 		else if(stage == 1 || stage == 16)
 		{
-			drawDClk(g2, tAndX, tAndY);
-			drawSR(g2, tAndX+200, tAndY, bAndY);
+			drawDClk(g2, tAndX-114, tAndY-30);
+			drawS(g2, tAndX+306, tAndY-68);
+			drawR(g2, tAndX+306, bAndY+94);
 
 			updateQ();
 			drawQ(g2, tAndX+200, tAndY);
@@ -267,8 +272,9 @@ class MyPanel extends JPanel implements ActionListener
 		}
 		else if(stage == 4)
 		{
-			drawDClk(g2, tAndX, tAndY);
-			drawSR(g2, tAndX+200, tAndY, bAndY);
+			drawDClk(g2, tAndX-114, tAndY-30);
+			drawS(g2, tAndX+306, tAndY-68);
+			drawR(g2, tAndX+306, bAndY+94);
 
 			updateNotQ();
 			drawNotQ(g2, tAndX+200, bAndY);
@@ -277,8 +283,9 @@ class MyPanel extends JPanel implements ActionListener
 		}
 		else
 		{
-			drawDClk(g2, tAndX, tAndY);
-			drawSR(g2, tAndX+200, tAndY, bAndY);
+			drawDClk(g2, tAndX-114, tAndY-30);
+			drawS(g2, tAndX+306, tAndY-68);
+			drawR(g2, tAndX+306, bAndY+94);
 			drawQ(g2, tAndX+200, tAndY);
 			drawNotQ(g2, tAndX+200, bAndY);
 		}
@@ -371,7 +378,7 @@ class MyPanel extends JPanel implements ActionListener
 
 		Font f = new Font("Monospaced", 1, 26);
 		g2.setFont(f);
-		g2.drawLine(tAndX-134, tAndY, tAndX-122, tAndY);
+		//g2.drawLine(tAndX-134, tAndY, tAndX-122, tAndY);
 		g2.drawString("S", tAndX-136, tAndY+24);
 		g2.drawLine(tAndX-134, bAndY+58, tAndX-122, bAndY+58);
 		g2.drawString("R", tAndX-136, bAndY+82);
@@ -534,8 +541,8 @@ class MyPanel extends JPanel implements ActionListener
 	}
 	public void drawTFFanimation(Graphics2D g2, int x, int y)
 	{
-		
-		
+
+
 	}
 
 	/** Draw an AND gate at coordinates (x, y) */
@@ -873,11 +880,11 @@ class MyPanel extends JPanel implements ActionListener
 
 		if(clk)
 		{
-			g2.drawString("1", tAndX-133, tAndY+198);
+			g2.drawString("1", tAndX-136, tAndY+204);
 		}
 		else
 		{
-			g2.drawString("0", tAndX-133, tAndY+198);
+			g2.drawString("0", tAndX-136, tAndY+204);
 		}
 	}
 
@@ -1143,11 +1150,33 @@ class MyPanel extends JPanel implements ActionListener
 			break;
 
 			case "S":
-				s = !s;
+				if(mode == "SR Latch")
+				{
+					s = !s;
+				}
+				else if(mode == "D Flip-Flop")
+				{
+					d = !d;
+				}
+				else if(mode == "T FLip-Flop")
+				{
+					t = !t;
+				}
 			break;
 
 			case "R":
-				r = !r;
+				if(mode == "SR Latch")
+				{
+					r = !r;
+				}
+				else if(mode == "D Flip-Flop")
+				{
+					clk = !clk;
+				}
+				else if(mode == "T Flip-Flop")
+				{
+					clk = !clk;
+				}
 			break;
 
 			case "Q":
