@@ -203,6 +203,7 @@ class MyPanel extends JPanel implements ActionListener
 			break;
 
 			case "T Flip-Flop":
+				drawTFlipFlop(g2);
 
 			break;
 
@@ -448,6 +449,25 @@ class MyPanel extends JPanel implements ActionListener
 		}
 	}
 
+	
+    public void drawTFlipFlop(Graphics2D g2)
+	{
+		int xXOR = 150;
+		int yXOR = 300;
+		g2.drawRect(xXOR+200, yXOR-20, 200, 300);
+		//2.clearRect(x+(andWidth-(lineThickness/2)), y+1, lineThickness, andHeight-1);
+		drawSegT1(g2, xXOR, yXOR);
+		drawSegT2(g2, xXOR, yXOR);
+		drawSegT3(g2, xXOR, yXOR);
+		drawSegT4(g2, xXOR, yXOR);
+		drawSegT5(g2, xXOR, yXOR);
+		drawSegT6(g2, xXOR, yXOR);
+		drawSegT7(g2, xXOR, yXOR);
+		drawSegT8(g2, xXOR, yXOR);
+		drawSegT9(g2, xXOR, yXOR);
+		drawSegT10(g2, xXOR, yXOR);
+		drawXOR(g2, xXOR, yXOR);
+	}
 
 	/** Draw an AND gate at coordinates (x, y) */
 	public void drawAnd(Graphics2D g2, int x, int y)
@@ -467,20 +487,17 @@ class MyPanel extends JPanel implements ActionListener
 	/** Draw an OR gate at coordinates (x, y) */
 	public void drawOr(Graphics2D g2, int x, int y)
 	{
-		g2.drawArc(x, y, 30, 100, 270, 180);
-		g2.drawArc(x, y, 150, 50, 0, 60);
+		g2.drawArc(x, y, 30, 75, 270, 180);
+		g2.drawArc(x-55, y-2, 175, 75, 0, 105);
+		g2.drawArc(x-55, y-4, 175, 80, 260, 96);
 	}
 	/** Draw a XOR gate at coordinates (x, y) */
 	public void drawXOR(Graphics2D g2, int x, int y)
 	{
-		//finish
+		drawOr(g2, x, y);
+		g2.drawArc(x-12, y, 30, 75, 270, 180);
 	}
 
-	/** Draw a NOR gate at coordinates (x, y) */
-	public void drawNor(Graphics2D g2, int x, int y)
-	{
-
-	}
 
 	/** Draw a NOT at coordinates (x,y) */
 	public void drawNot(Graphics2D g2, int x, int y)
@@ -967,6 +984,47 @@ class MyPanel extends JPanel implements ActionListener
 		g2.drawLine(tAndX-62, tAndY+150, tAndX-62, bAndY+46);
 	}
 
+	private void drawSegT1(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX-100, tAndY+46, tAndX+30, tAndY+46);
+	}
+	private void drawSegT2(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX-62, tAndY+15, tAndX+27, tAndY+15);
+	}
+	private void drawSegT3(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX-62, tAndY-100, tAndX-62, tAndY+15);
+	}
+	private void drawSegT4(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX-62, tAndY-100, tAndX+500, tAndY-100);
+	}
+	private void drawSegT5(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX+500, tAndY-100, tAndX+500, tAndY+35);
+	}
+	private void drawSegT6(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX+400, tAndY+35, tAndX+500, tAndY+35);
+	}
+	private void drawSegT7(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX+500, tAndY+35, tAndX+600, tAndY+35);
+	}
+	private void drawSegT8(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX-100, tAndY+200, tAndX+200, tAndY+200);
+	}
+	private void drawSegT9(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX+400, tAndY+200, tAndX+600, tAndY+200);
+	}
+	private void drawSegT10(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX+120, tAndY+35, tAndX+200, tAndY+35);
+	}
+	
 	/**
 	 * If input is received, set pulse to integer & bit shift by 1 upon
 	 * each subsequent call until pulse == 0 to signal animation
