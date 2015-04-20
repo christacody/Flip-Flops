@@ -468,7 +468,7 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 
 		Font f = new Font("Monospaced", 1, 26);
 		g2.setFont(f);
-		//g2.drawLine(tAndX-134, tAndY, tAndX-122, tAndY);
+		g2.drawLine(tAndX-134, tAndY, tAndX-122, tAndY);
 		g2.drawString("S", tAndX-136, tAndY+24);
 		g2.drawLine(tAndX-134, bAndY+58, tAndX-122, bAndY+58);
 		g2.drawString("R", tAndX-136, bAndY+82);
