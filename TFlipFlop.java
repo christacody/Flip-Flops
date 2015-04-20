@@ -163,6 +163,10 @@ public class TFlipFlop{
 			{
 				drawSegT6(g2, x, y);
 				drawSegT9(g2, x, y);
+				g2.setFont(num);
+				g2.drawString(q, x+610, y+55);
+				g2.drawString(notq, x+610, y+220);
+				g2.setFont(font);
 			}
 			
 			if(stage == 0)
