@@ -292,10 +292,15 @@ class MyPanel extends JPanel implements ActionListener
 					stage = 512;
 				}
 			}
+			int stageval = stage;
 
 			drawSRCircuit(g2, tAndX+200, tAndY, bAndY);
 
+			stage = stageval;
+
 			drawDScenario(g2, tAndX, tAndY, bAndY);
+
+			stage >>= 1;
 
 			pulse = false;
 		}
@@ -726,7 +731,7 @@ class MyPanel extends JPanel implements ActionListener
 			drawSRScenario1(g2, tAndX, tAndY, bAndY);
 			stage = 1;
 		}
-		else if(stage > 2)
+		else if(stage > 2 && stage <= 32)
 		{
 			stage >>= 2;
 			drawSRScenario1(g2, tAndX, tAndY, bAndY);
