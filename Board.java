@@ -159,7 +159,7 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 		clk = false;
 		t = true;
 		stall = false;
-
+		scenario2 = false;
 	}
 
 	/** Returns preferred size */
@@ -201,6 +201,9 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 		g2.setStroke(new BasicStroke(lineThickness));
 		g2.setColor(Color.black);
 		super.paintComponent(g);
+
+		//Draw instructions
+		drawInstructions(g2, 220, 530);
 
 		switch(mode)
 		{
@@ -418,6 +421,7 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 				{
 					stage = 512;
 				}
+				scenario2 = false;
 			}
 
 			//Second animation scenario
@@ -427,8 +431,16 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 				{
 					stage = 512;
 				}
+				scenario2 = true;
 			}
-			int stageval = stage;
+			int stageval;
+
+			if(stage == 32 && !scenario2)
+			{
+				stage = 8;
+			}
+
+			stageval = stage;
 
 			drawSRCircuit(g2, tAndX+200, tAndY, bAndY);
 
@@ -1216,6 +1228,15 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 	private void drawSeg25(Graphics2D g2, int tAndX, int tAndY, int bAndY)
 	{
 		g2.drawLine(tAndX-62, tAndY+150, tAndX-62, bAndY+46);
+	}
+
+	private void drawInstructions(Graphics2D g2, int x, int y)
+	{
+		Font instructfont = new Font("Monospaced", 1, 16);
+		g2.setFont(instructfont);
+		g2.drawString("Press Start to begin animation & Enter to step through", x, y);
+		instructfont = new Font("Monospaced", 1, 16);
+		g2.setFont(instructfont);
 	}
 
 	/**

@@ -97,11 +97,6 @@ public class TFlipFlop{
 				stage = 3;
 		  }
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 54fbcc05448a7f01fb4e5e3b5cb6a8f508f1aad1
 			if( stage == 3)
 			{
 				g2.setColor(Color.green);
