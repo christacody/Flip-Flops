@@ -386,6 +386,7 @@ class MyPanel extends JPanel implements ActionListener
 		}
 	}
 
+
 	/** Draw an AND gate at coordinates (x, y) */
 	public void drawAnd(Graphics2D g2, int x, int y)
 	{
@@ -406,6 +407,11 @@ class MyPanel extends JPanel implements ActionListener
 	{
 		g2.drawArc(x, y, 30, 100, 270, 180);
 		g2.drawArc(x, y, 150, 50, 0, 60);
+	}
+	/** Draw a XOR gate at coordinates (x, y) */
+	public void drawXOR(Graphics2D g2, int x, int y)
+	{
+		//finish
 	}
 
 	/** Draw a NOR gate at coordinates (x, y) */
@@ -983,11 +989,15 @@ class MyPanel extends JPanel implements ActionListener
 		int D = -1;
 		if( T == 0 && Q == 0)
 		{
-			D = 1;
+			D = 0;
+		}
+		else if( T == 1 && Q == 1)
+		{
+			D = 0;
 		}
 		else
 		{
-			D = 0;
+			D = 1;
 		}
 
 		TFFarray[1] = D;
