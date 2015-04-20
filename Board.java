@@ -455,8 +455,8 @@ class MyPanel extends JPanel implements ActionListener
 
     public void drawTFlipFlop(Graphics2D g2)
 	{
-		int xXOR = 150;
-		int yXOR = 300;
+		int xXOR = 250;
+		int yXOR = 200;
 		Font f = new Font("Monospaced", 1, 26);
 		g2.setFont(f);
 		g2.drawString("T", xXOR-100, yXOR+53);
@@ -466,6 +466,9 @@ class MyPanel extends JPanel implements ActionListener
 		g2.drawString("Q", xXOR+380, yXOR+35);
 		g2.drawLine(xXOR+383, yXOR+187, xXOR+391, yXOR+187);
 		g2.drawString("Q", xXOR+380, yXOR+205);
+		g2.drawString("Q", xXOR+605, yXOR+35);
+		g2.drawLine(xXOR+608, yXOR+182, xXOR+616, yXOR+182);
+		g2.drawString("Q", xXOR+605, yXOR+200);
 		//g2.drawString("Clk", xXOR+200, yXOR-20);
 		g2.drawRect(xXOR+200, yXOR-20, 200, 300);
 		//2.clearRect(x+(andWidth-(lineThickness/2)), y+1, lineThickness, andHeight-1);
