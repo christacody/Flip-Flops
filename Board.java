@@ -370,6 +370,7 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 			drawNotQ(g2, tAndX+200, bAndY);
 		}
 
+		System.out.println(stage);
 		SRLatchHelper(g2, tAndX+200, tAndY, bAndY);
 		drawDCircuit(g2, tAndX, tAndY, bAndY);
 	}
@@ -467,7 +468,7 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 
 		Font f = new Font("Monospaced", 1, 26);
 		g2.setFont(f);
-		//g2.drawLine(tAndX-134, tAndY, tAndX-122, tAndY);
+		g2.drawLine(tAndX-134, tAndY, tAndX-122, tAndY);
 		g2.drawString("S", tAndX-136, tAndY+24);
 		g2.drawLine(tAndX-134, bAndY+58, tAndX-122, bAndY+58);
 		g2.drawString("R", tAndX-136, bAndY+82);
@@ -926,7 +927,7 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 
 	private void updateR()
 	{
-		if(latch[4] == 1)
+		if(latch[5] == 1)
 		{
 			r = true;
 		}
@@ -938,52 +939,108 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 
 	private void updateQ()
 	{
-		if(latch.length == 7)
+		if(latch.length == 7 || latch.length == 10)
 		{
-			if(latch[3] == 1)
+			if(latch.length == 7)
 			{
-				q = true;
+				if(latch[3] == 1)
+				{
+					q = true;
+				}
+				else
+				{
+					q = false;
+				}
 			}
 			else
 			{
-				q = false;
+				if(latch[9] == 1)
+				{
+					q = true;
+				}
+				else
+				{
+					q = false;
+				}
 			}
 		}
 		else
 		{
-			if(latch[9] == 1)
+			if(latch.length == 9)
 			{
-				q = true;
+				if(latch[4] == 1)
+				{
+					q = true;
+				}
+				else
+				{
+					q = false;
+				}
 			}
 			else
 			{
-				q = false;
+				if(latch[11] == 1)
+				{
+					q = true;
+				}
+				else
+				{
+					q = false;
+				}
 			}
 		}
 	}
 
 	private void updateNotQ()
 	{
-		if(latch.length == 7)
+		if(latch.length == 7 || latch.length == 10)
 		{
-			if(latch[6] == 1)
+			if(latch.length == 7)
 			{
-				q2 = true;
+				if(latch[6] == 1)
+				{
+					q2 = true;
+				}
+				else
+				{
+					q2 = false;
+				}
 			}
 			else
 			{
-				q2 = false;
+				if(latch[6] == 1)
+				{
+					q2 = true;
+				}
+				else
+				{
+					q2 = false;
+				}
 			}
 		}
 		else
 		{
-			if(latch[6] == 1)
+			if(latch.length == 9)
 			{
-				q2 = true;
+				if(latch[8] == 1)
+				{
+					q2 = true;
+				}
+				else
+				{
+					q2 = false;
+				}
 			}
 			else
 			{
-				q2 = false;
+				if(latch[8] == 1)
+				{
+					q2 = true;
+				}
+				else
+				{
+					q2 = false;
+				}
 			}
 		}
 	}
