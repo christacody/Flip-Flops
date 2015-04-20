@@ -62,11 +62,11 @@ public class TFlipFlop{
 		g2.setFont(num);
 		g2.drawString(t, xXOR-95, yXOR+75);
 		g2.drawString(clk, xXOR-95, yXOR+225);
-		g2.drawString(q, xXOR+620, yXOR+35);
-		g2.drawString(notq, xXOR+620, yXOR+200);
+		g2.drawString(q, xXOR+610, yXOR+55);
+		g2.drawString(notq, xXOR+610, yXOR+220);
 		g2.setFont(f);
 	
-		drawTFFanimation(g2, xXOR, yXOR);
+		drawTFFanimation(g2, xXOR, yXOR, array);
 	}
 	public int getStage()
 	{
@@ -76,14 +76,19 @@ public class TFlipFlop{
 	{
 		this.pulse = pulse;
 	}
-	public void drawTFFanimation(Graphics2D g2, int x, int y)
+	public void drawTFFanimation(Graphics2D g2, int x, int y, int[] array)
 	{
+		Font font = new Font("Monospaced", 1, 26);
+		Font num = new Font("Monospaced", 1, 16);
+		
+		String c = Integer.toString(array[0]);
+		String d = Integer.toString(array[1]);
+		String e = Integer.toString(array[2]);
+		String f = Integer.toString(array[3]);
 		
 		  if(pulse && stage == 0)
 		  {
 				stage = 3; 
-				System.out.println("test");
-				System.out.println(stage);	
 		  }
 		  
 		  
@@ -100,11 +105,8 @@ public class TFlipFlop{
 				drawSegT7(g2, x, y);
 				g2.setColor(Color.black);
 				g2.setFont(num);
-				g2.drawString(t, xXOR-95, yXOR+75);
-				g2.drawString(clk, xXOR-95, yXOR+225);
-				g2.drawString(q, xXOR+620, yXOR+35);
-				g2.drawString(notq, xXOR+620, yXOR+200);
-				g2.setFont(f);
+				g2.drawString(c, x-20, y+10);
+				g2.setFont(font);
 				
 			}
 			else
@@ -115,6 +117,9 @@ public class TFlipFlop{
 				drawSegT4(g2, x, y);
 				drawSegT5(g2, x, y);
 				drawSegT7(g2, x, y);
+				g2.setFont(num);
+				g2.drawString(c, x-20, y+10);
+				g2.setFont(font);
 			}
 			
 			if(stage ==2)
@@ -123,12 +128,18 @@ public class TFlipFlop{
 				drawSegT8(g2, x, y);
 				drawSegT10(g2, x, y);
 				g2.setColor(Color.black);
+				g2.setFont(num);
+				g2.drawString(d, x+130, y+30);
+				g2.setFont(font);
 				
 			}
 			else
 			{
 				drawSegT8(g2, x, y);
 				drawSegT10(g2, x, y);
+				g2.setFont(num);
+				g2.drawString(d, x+130, y+30);
+				g2.setFont(font);
 			}
 			
 			if(stage==1)
