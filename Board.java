@@ -249,7 +249,6 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 
 				int[] tffarray = TFlipFlop(T,Clk,Q);
 				tff.drawTFlipFlop(g2, T, Clk, Q, tffarray);
-				//need to add logic for updating values, and setting array
 				pulse = false;
 
 				if(tff.getStage() == 0 && !stall)
