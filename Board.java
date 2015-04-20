@@ -100,9 +100,9 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 	private int lineThickness = 4;		//Thickness of lines drawn
 	private boolean pulse = false;		//Indicates pulse to be drawn on diagram
 	private int stage = 0;				//Indicates stage of diagram to be drawn next
-	private int delay = 1600;			//Determines how often diagram is repainted
+	private int delay = 800;			//Determines how often diagram is repainted
 	private BasicStroke defaultStroke;	//Default line thickness
-	private boolean s, r, q, q2, d, clk, t, stall;
+	private boolean s, r, q, q2, d, clk, t, stall, scenario2;
 	private TFlipFlop tff;
 	private int[] latch;
 	JButton but, butS, butR, butQ;
@@ -166,6 +166,8 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 		d = false;
 		clk = false;
 		t = true;
+		stall = false;
+		scenario2 = false;
 	}
 
 	/** Returns preferred size */
@@ -420,6 +422,7 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 				if(stage == 0)
 				{
 					stage = 512;
+					scenario2 = false;
 				}
 			}
 
@@ -429,9 +432,11 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 				if(stage == 0)
 				{
 					stage = 512;
+					scenario2 = true;
 				}
 			}
 			int stageval = stage;
+
 
 			drawSRCircuit(g2, tAndX+200, tAndY, bAndY);
 
@@ -439,15 +444,7 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 
 			drawDScenario(g2, tAndX, tAndY, bAndY);
 
-			if(stage == 1)
-			{
-				stage >>= 1;
-				stall = true;
-			}
-			else
-			{
-				stage >>= 1;
-			}
+			stage >>= 1;
 
 			pulse = false;
 		}
