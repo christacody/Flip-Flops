@@ -74,27 +74,6 @@ public class Board
 		//pnl is where the diagrams are drawn
 		final MyPanel pnl = new MyPanel();
 
-
-		//Add buttons to pnl for input to circuit diagram
-		JButton butS = new JButton("S");
-		butS.addActionListener(pnl);
-		butS.setActionCommand("S");
-		pnl.add(butS);
-		JButton butR = new JButton("R");
-		butR.addActionListener(pnl);
-		butR.setActionCommand("R");
-		pnl.add(butR);
-
-		JButton but = new JButton("START");
-		but.addActionListener(pnl);
-		but.setActionCommand("A");
-		pnl.add(but);
-
-		JButton butQ = new JButton("Q");
-		butQ.addActionListener(pnl);
-		butQ.setActionCommand("Q");
-		pnl.add(butQ);
-
 		//Add pnl to frame and make it visible
 		frame.add(pnl);
 		frame.pack();
@@ -123,8 +102,9 @@ class MyPanel extends JPanel implements ActionListener
 	private BasicStroke defaultStroke;	//Default line thickness
 	private boolean s, r, q, q2;
 	private int[] latch;
+	JButton but, butS, butR, butQ;
 
-		
+
 	/** Constructor: Set border color to black */
 	public MyPanel()
 	{
@@ -148,9 +128,24 @@ class MyPanel extends JPanel implements ActionListener
 		int[] array7 = TFlipFlop(0,1,0);
 		int[] array8 = TFlipFlop(0,0,0);
 		System.out.println(java.util.Arrays.toString(array5));*/
-		
-		
-		
+
+		butS = new JButton("S");
+		butS.addActionListener(this);
+		butS.setActionCommand("S");
+		this.add(butS);
+		butR = new JButton("R");
+		butR.addActionListener(this);
+		butR.setActionCommand("R");
+		this.add(butR);
+		but = new JButton("START");
+		but.addActionListener(this);
+		but.setActionCommand("A");
+		this.add(but);
+		butQ = new JButton("Q");
+		butQ.addActionListener(this);
+		butQ.setActionCommand("Q");
+		this.add(butQ);
+
 		setBorder(BorderFactory.createLineBorder(Color.black));
 		defaultStroke = new BasicStroke(lineThickness);
 
@@ -165,7 +160,7 @@ class MyPanel extends JPanel implements ActionListener
 
 		new Timer(delay, drawDelay).start();
 
-		s = false;
+		s = true;
 		r = false;
 		q = true;
 		q2 = false;
@@ -198,7 +193,7 @@ class MyPanel extends JPanel implements ActionListener
 			break;
 
 			case "D Flip-Flop":
-
+				drawGatedDLatch(g2);
 			break;
 
 			case "T Flip-Flop":
@@ -211,16 +206,36 @@ class MyPanel extends JPanel implements ActionListener
 	}
 
 	/** Draw Gated SR Latch onscreen */
-	public void drawGatedSRLatch(Graphics2D g2)
+	public void drawGatedDLatch(Graphics2D g2)
 	{
 		int tAndX = 300;		//Top NAND gate X coordinate
 		int tAndY = 200;		//Top NAND gate Y coordinate
 		int bAndY = tAndY+200;	//Bottom NAND gate Y coordinate
 
+		Font f = new Font("Monospaced", 1, 26);
+		g2.setFont(f);
+		g2.drawString("S", tAndX+170, tAndY-(andHeight/2-50));
+		g2.drawString("R", tAndX+170, bAndY+(andHeight/2+60));
+		g2.drawString("D", tAndX-250, tAndY-6);
+		g2.drawString("Clk", tAndX-270, tAndY+158);
+
 		drawNand(g2, tAndX-10, tAndY-(andHeight/2-16));
 		drawNand(g2, tAndX-10, bAndY+(andHeight/2-14));
+		drawNotGate(g2, tAndX-130, bAndY+89);
 		drawConnect(g2, tAndX-187, tAndY-(andHeight/2-24));
 		drawConnect(g2, tAndX-70, tAndY+144);
+		drawDCircuit();
+
+		drawSRCircuit(g2, tAndX+200, tAndY, bAndY);
+	}
+
+	public void drawDCircuit()
+	{
+		if(stage != 0)
+		{
+			pulse = true;
+		}
+
 		drawSeg15(g2, tAndX, tAndY);
 		drawSeg16(g2, tAndX, tAndY);
 		drawSeg17(g2, tAndX, tAndY, bAndY);
@@ -231,8 +246,6 @@ class MyPanel extends JPanel implements ActionListener
 		drawSeg22(g2, tAndX, tAndY, bAndY);
 		drawSeg23(g2, tAndX, tAndY);
 		drawSeg24(g2, tAndX, tAndY);
-
-		drawSRCircuit(g2, tAndX+200, tAndY, bAndY);
 	}
 
 	/** Draw S-R Latch diagram onscreen */
@@ -262,8 +275,15 @@ class MyPanel extends JPanel implements ActionListener
 		if(stage == 0)
 		{
 			drawSR(g2, tAndX, tAndY, bAndY);
+
+			if(q == true && q2 == true)
+			{
+				g2.setColor(Color.red);
+			}
+
 			drawQ(g2, tAndX, tAndY);
 			drawNotQ(g2, tAndX, bAndY);
+			g2.setColor(Color.black);
 		}
 		else if(stage == 1 || stage == 16)
 		{
@@ -398,6 +418,14 @@ class MyPanel extends JPanel implements ActionListener
 	public void drawNot(Graphics2D g2, int x, int y)
 	{
 		g2.drawOval(x, y, 16, 16);
+	}
+
+	public void drawNotGate(Graphics2D g2, int x, int y)
+	{
+		g2.drawLine(x, y, x, y+40);
+		g2.drawLine(x, y, x+40, y+20);
+		g2.drawLine(x, y+40, x+40, y+20);
+		g2.drawOval(x+40, y+13, 12, 12);
 	}
 
 	/** Draw a point of I/O at coordinates (x,y) */
@@ -733,12 +761,12 @@ class MyPanel extends JPanel implements ActionListener
 
 	private void drawSeg18(Graphics2D g2, int tAndX, int bAndY)
 	{
-		g2.drawLine(tAndX-180, bAndY+109, tAndX-100, bAndY+109);
+		g2.drawLine(tAndX-180, bAndY+109, tAndX-130, bAndY+109);
 	}
 
 	private void drawSeg19(Graphics2D g2, int tAndX, int bAndY)
 	{
-		g2.drawLine(tAndX-100, bAndY+109, tAndX-10, bAndY+109);
+		g2.drawLine(tAndX-76, bAndY+109, tAndX-10, bAndY+109);
 	}
 
 	private void drawSeg20(Graphics2D g2, int tAndX, int tAndY)
@@ -800,8 +828,15 @@ class MyPanel extends JPanel implements ActionListener
 			break;
 
 			case "Q":
-				q = !q;
-				q2 = !q2;
+				if(q == q2)
+				{
+					q = !q;
+				}
+				else
+				{
+					q = !q;
+					q2 = !q2;
+				}
 			break;
 		}
 	}
