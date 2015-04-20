@@ -484,6 +484,11 @@ class MyPanel extends JPanel implements ActionListener
 		drawSegT10(g2, xXOR, yXOR);
 		drawXOR(g2, xXOR, yXOR);
 	}
+	public void drawTFFanimation(Graphics2D g2, int x, int y)
+	{
+		
+		
+	}
 
 	/** Draw an AND gate at coordinates (x, y) */
 	public void drawAnd(Graphics2D g2, int x, int y)
