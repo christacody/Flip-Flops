@@ -19,6 +19,7 @@
  */
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -91,7 +92,7 @@ public class Board
 	}
 }
 
-class MyPanel extends JPanel implements ActionListener
+class MyPanel extends JPanel implements ActionListener, KeyListener
 {
 	private String mode = "SR Latch";	//Determines which diagram is shown
 	private int andWidth = 40;			//Width of the AND/NAND gates
@@ -102,6 +103,7 @@ class MyPanel extends JPanel implements ActionListener
 	private int delay = 1600;			//Determines how often diagram is repainted
 	private BasicStroke defaultStroke;	//Default line thickness
 	private boolean s, r, q, q2, d, clk, t;
+	private TFlipFlop tff;
 	private int[] latch;
 	JButton but, butS, butR, butQ;
 
@@ -129,19 +131,33 @@ class MyPanel extends JPanel implements ActionListener
 
 		setBorder(BorderFactory.createLineBorder(Color.black));
 		defaultStroke = new BasicStroke(lineThickness);
+		tff = new TFlipFlop();
 
 		// Repaint in increments specified by $delay
 		ActionListener drawDelay = new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(stage == 0)
+				if(mode == "SR Latch" || mode == "D Flip-Flop")
 				{
-					repaint();
+					if(stage == 0)
+					{
+						repaint();
+					}
 				}
+				else if(mode == "T Flip-Flop")
+				{
+					if(tff.getStage() == 0)
+					{
+						repaint();
+					}
+				}
+
+
 			}
 		};
 
+		addKeyListener(this);
 
 		new Timer(delay, drawDelay).start();
 		//true - 1 false - 0
@@ -166,6 +182,20 @@ class MyPanel extends JPanel implements ActionListener
 		mode = newMode;
 		super.repaint();
 	}
+
+	public void addNotify()
+	{
+        super.addNotify();
+        requestFocus();
+    }
+
+	public void keyReleased(KeyEvent e)
+	{
+		repaint();
+	}
+	public void keyPressed(KeyEvent e) { }
+
+    public void keyTyped(KeyEvent e) { }
 
 	/** Paint diagram to JPanel */
 	public void paintComponent(Graphics g)
@@ -192,7 +222,6 @@ class MyPanel extends JPanel implements ActionListener
 			case "T Flip-Flop":
 				butS.setText("T");
 				butR.setText("Clk");
-				TFlipFlop tff = new TFlipFlop();
 				int stage = tff.getStage();
 				if(stage != 0)
 					pulse = true;
@@ -210,7 +239,7 @@ class MyPanel extends JPanel implements ActionListener
 					Q = 1;
 				else
 					Q = 0;
-					
+
 				int[] tffarray = TFlipFlop(T,Clk,Q);
 				tff.drawTFlipFlop(g2, T, Clk, Q, tffarray);
 				//need to add logic for updating values, and setting array
@@ -221,6 +250,11 @@ class MyPanel extends JPanel implements ActionListener
 
 			default:
 				g.drawString(mode, 10, 20);
+		}
+
+		if(stage != 0)
+		{
+			requestFocus();
 		}
 	}
 
@@ -364,7 +398,6 @@ class MyPanel extends JPanel implements ActionListener
 
 			latch = DFlipFlop(sendD, sendClk, sendQ);
 
-			System.out.println("Scenario: " + latch[0]);
 
 			//First animation scenario
 			if(latch[0] == 1)
@@ -1427,5 +1460,3 @@ class MyPanel extends JPanel implements ActionListener
 		return TFFarray;
 	}
 }
-
-	
