@@ -98,7 +98,6 @@ public class TFlipFlop{
 		  }
 
 
-		 System.out.println(stage);
 
 			if( stage == 3)
 			{
