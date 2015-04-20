@@ -74,11 +74,26 @@ public class Board
 		//pnl is where the diagrams are drawn
 		final MyPanel pnl = new MyPanel();
 
-		//Add button to pnl for input to circuit diagrams
+
+		//Add buttons to pnl for input to circuit diagram
+		JButton butS = new JButton("S");
+		butS.addActionListener(pnl);
+		butS.setActionCommand("S");
+		pnl.add(butS);
+		JButton butR = new JButton("R");
+		butR.addActionListener(pnl);
+		butR.setActionCommand("R");
+		pnl.add(butR);
+
 		JButton but = new JButton("START");
 		but.addActionListener(pnl);
 		but.setActionCommand("A");
 		pnl.add(but);
+
+		JButton butQ = new JButton("Q");
+		butQ.addActionListener(pnl);
+		butQ.setActionCommand("Q");
+		pnl.add(butQ);
 
 		//Add pnl to frame and make it visible
 		frame.add(pnl);
@@ -106,6 +121,8 @@ class MyPanel extends JPanel implements ActionListener
 	private int stage = 0;				//Indicates stage of diagram to be drawn next
 	private int delay = 600;			//Determines how often diagram is repainted
 	private BasicStroke defaultStroke;	//Default line thickness
+	private boolean s, r, q, q2;
+	private int[] latch;
 
 	/** Constructor: Set border color to black */
 	public MyPanel()
@@ -123,6 +140,11 @@ class MyPanel extends JPanel implements ActionListener
 		};
 
 		new Timer(delay, drawDelay).start();
+
+		s = false;
+		r = false;
+		q = true;
+		q2 = false;
 	}
 
 	/** Returns preferred size */
@@ -148,7 +170,7 @@ class MyPanel extends JPanel implements ActionListener
 		switch(mode)
 		{
 			case "SR Latch":
-				drawGatedSRLatch(g2);
+				drawSRLatch(g2);
 			break;
 
 			case "D Flip-Flop":
@@ -210,13 +232,45 @@ class MyPanel extends JPanel implements ActionListener
 		drawIOPoint(g2, tAndX+(andWidth+202), tAndY+(andHeight/2-7));
 		drawIOPoint(g2, tAndX+(andWidth+202), bAndY+(andHeight/2-7));
 
+		f = new Font("Monospaced", 1, 16);
+		g2.setFont(f);
+
+		if(stage == 0)
+		{
+			drawSR(g2, tAndX, tAndY, bAndY);
+			drawQ(g2, tAndX, tAndY);
+			drawNotQ(g2, tAndX, bAndY);
+		}
+		else if(stage == 1 || stage == 16)
+		{
+			drawSR(g2, tAndX, tAndY, bAndY);
+
+			updateQ();
+			drawQ(g2, tAndX, tAndY);
+
+			drawNotQ(g2, tAndX, bAndY);
+		}
+		else if(stage == 4)
+		{
+			drawSR(g2, tAndX, tAndY, bAndY);
+
+			updateNotQ();
+			drawNotQ(g2, tAndX, bAndY);
+
+			drawQ(g2, tAndX, tAndY);
+		}
+		else
+		{
+			drawSR(g2, tAndX, tAndY, bAndY);
+			drawQ(g2, tAndX, tAndY);
+			drawNotQ(g2, tAndX, bAndY);
+		}
+
 		drawSRCircuit(g2, tAndX, tAndY, bAndY);
 	}
 
 	public void drawSRCircuit(Graphics2D g2, int tAndX, int tAndY, int bAndY)
 	{
-		int[] latch;
-
 		drawNand(g2, tAndX, tAndY);
 		drawNand(g2, tAndX, bAndY);
 
@@ -228,7 +282,36 @@ class MyPanel extends JPanel implements ActionListener
 
 		if(pulse)
 		{
-			latch = SRLatch(0,1,1);
+			int sendS, sendR, sendQ;
+
+			if(s)
+			{
+				sendS = 1;
+			}
+			else
+			{
+				sendS = 0;
+			}
+
+			if(r)
+			{
+				sendR = 1;
+			}
+			else
+			{
+				sendR = 0;
+			}
+
+			if(q)
+			{
+				sendQ = 1;
+			}
+			else
+			{
+				sendQ = 0;
+			}
+
+			latch = SRLatch(sendS, sendR, sendQ);
 
 			//First animation scenario
 			if(latch[0] == 1)
@@ -355,7 +438,6 @@ class MyPanel extends JPanel implements ActionListener
 			drawSeg4(g2, tAndX, tAndY, bAndY);
 			drawSeg5(g2, tAndX, bAndY);
 			g2.setColor(Color.black);
-			System.out.println("S1 Stage 1");
 		}
 		else
 		{
@@ -373,7 +455,6 @@ class MyPanel extends JPanel implements ActionListener
 			drawSeg6(g2, tAndX, tAndY);
 			drawSeg7(g2, tAndX, tAndY);
 			g2.setColor(Color.black);
-			System.out.println("S1 Stage 2");
 		}
 		else
 		{
@@ -391,7 +472,6 @@ class MyPanel extends JPanel implements ActionListener
 			drawSeg11(g2, tAndX, tAndY, bAndY);
 			drawSeg12(g2, tAndX, tAndY);
 			g2.setColor(Color.black);
-			System.out.println("S1 Stage 3");
 		}
 		else
 		{
@@ -408,7 +488,6 @@ class MyPanel extends JPanel implements ActionListener
 			drawSeg13(g2, tAndX, bAndY);
 			drawSeg14(g2, tAndX, bAndY);
 			g2.setColor(Color.black);
-			System.out.println("S1 Stage 4");
 		}
 		else
 		{
@@ -442,6 +521,103 @@ class MyPanel extends JPanel implements ActionListener
 			{
 				stage = 2;
 			}
+		}
+	}
+
+	private void updateQ()
+	{
+		if(latch.length == 7)
+		{
+			if(latch[3] == 1)
+			{
+				q = true;
+			}
+			else
+			{
+				q = false;
+			}
+		}
+		else
+		{
+			if(latch[9] == 1)
+			{
+				q = true;
+			}
+			else
+			{
+				q = false;
+			}
+		}
+	}
+
+	private void updateNotQ()
+	{
+		if(latch.length == 7)
+		{
+			if(latch[6] == 1)
+			{
+				q2 = true;
+			}
+			else
+			{
+				q2 = false;
+			}
+		}
+		else
+		{
+			if(latch[6] == 1)
+			{
+				q2 = true;
+			}
+			else
+			{
+				q2 = false;
+			}
+		}
+	}
+
+	private void drawSR(Graphics2D g2, int tAndX, int tAndY, int bAndY)
+	{
+		if(s)
+		{
+			g2.drawString("1", tAndX-133, tAndY+40);
+		}
+		else
+		{
+			g2.drawString("0", tAndX-133, tAndY+40);
+		}
+
+		if(r)
+		{
+			g2.drawString("1", tAndX-133, bAndY+98);
+		}
+		else
+		{
+			g2.drawString("0", tAndX-133, bAndY+98);
+		}
+	}
+
+	private void drawQ(Graphics2D g2, int tAndX, int tAndY)
+	{
+		if(q)
+		{
+			g2.drawString("1", tAndX+(andWidth+222), tAndY+(andHeight/2+25));
+		}
+		else
+		{
+			g2.drawString("0", tAndX+(andWidth+222), tAndY+(andHeight/2+25));
+		}
+	}
+
+	private void drawNotQ(Graphics2D g2, int tAndX, int bAndY)
+	{
+		if(q2)
+		{
+			g2.drawString("1", tAndX+(andWidth+222), bAndY+(andHeight/2+25));
+		}
+		else
+		{
+			g2.drawString("0", tAndX+(andWidth+222), bAndY+(andHeight/2+25));
 		}
 	}
 
@@ -590,6 +766,19 @@ class MyPanel extends JPanel implements ActionListener
 			case "A":
 				sendPulse();
 			break;
+
+			case "S":
+				s = !s;
+			break;
+
+			case "R":
+				r = !r;
+			break;
+
+			case "Q":
+				q = !q;
+				q2 = !q2;
+			break;
 		}
 	}
 
@@ -708,34 +897,34 @@ class MyPanel extends JPanel implements ActionListener
 			}
 			else if( i == 5)
 			{
-				DFFarray[5] = notR; 
+				DFFarray[5] = notR;
 			}
 			else
 			{
 				DFFarray[i] = array[j];
 				j++;
 			}
-			
+
 		}
-		return DFFarray;	
+		return DFFarray;
 
 	}
-	
+
 	public int[] TFlipFlop(int T, int Clk, int Q)
 	{
 		int D = -1;
 		if( T == 0 && Q == 0)
 		{
-			D = 1; 
+			D = 1;
 		}
 		else
 		{
-			D = 0; 
+			D = 0;
 		}
-		
+
 		int[] array = DFlipFlop( D, Clk, Q);
 		//need to change array inputs
 		return array;
-		
+
 	}
 }
