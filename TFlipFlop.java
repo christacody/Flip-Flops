@@ -42,7 +42,7 @@ public class TFlipFlop{
 		//g2.drawString("Clk", xXOR+205, yXOR+205);
 		drawTriState(g2, xXOR+200, yXOR+180);
 		g2.drawString("Q", xXOR+380, yXOR+35);
-		g2.drawLine(xXOR+383, yXOR+187, xXOR+391, yXOR+187);
+		g2.drawLine(xXOR+383, yXOR+180, xXOR+391, yXOR+180);
 		g2.drawString("Q", xXOR+380, yXOR+205);
 		g2.drawString("Q", xXOR+605, yXOR+35);
 		g2.drawLine(xXOR+608, yXOR+175, xXOR+616, yXOR+175);

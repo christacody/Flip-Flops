@@ -1,11 +1,17 @@
 JCC = javac
 JFLAGS = -g
 RUN = java
+.SUFFIXES: .java .class
+.java.class:
+	$(JCC) $(JFLAGS) $*.java
 
-default: Board.class
+CLASSES = \
+	Board.java \
+	TFlipFlop.java
 
-Board.class: Board.java
-	$(JCC) $(JFLAGS) Board.java
+default: classes
+
+classes: $(CLASSES:.java=.class)
 
 clean:
 	$(RM) *.class
