@@ -45,7 +45,6 @@ public class Board
 		frame.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Computer Architecture");
-		frame.setLocationRelativeTo(null);
 
 		//Make the drop-down list of diagram options & labels for the options
 		String[] opts = {"SR Latch", "D Flip-Flop", "T Flip-Flop", "JK Flip-Flop"};
@@ -126,7 +125,7 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 		butJ.setActionCommand("J");
 		butJ.setVisible(false);
 		this.add(butJ);
-		
+
 		setBorder(BorderFactory.createLineBorder(Color.black));
 		defaultStroke = new BasicStroke(lineThickness);
 		tff = new TFlipFlop();
@@ -174,10 +173,10 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 		t = true;
 		stall = false;
 		scenario2 = false;
-		j = true; 
-		k = true; 
-		
-		
+		j = true;
+		k = true;
+
+
 	}
 
 	/** Returns preferred size */
@@ -218,10 +217,16 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setStroke(new BasicStroke(lineThickness));
 		g2.setColor(Color.black);
+		g2.setRenderingHint(
+			RenderingHints.KEY_ANTIALIASING,
+			RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setRenderingHint(
+		    RenderingHints.KEY_TEXT_ANTIALIASING,
+		    RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		super.paintComponent(g);
 
 		//Draw instructions
-		drawInstructions(g2, 220, 530);
+		drawInstructions(g2, 220, 500);
 
 		switch(mode)
 		{
@@ -268,7 +273,7 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 					enableButtons();
 				}
 				break;
-				
+
 				case "JK Flip-Flop":
 				int J,K;
 				J = 0;
@@ -279,7 +284,7 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 				butQ.setText("START");
 				butJ.setText("Q");
 				butJ.setVisible(true);
-				
+
 				int stageJK = jkff.getStage();
 				if(stageJK != 0)
 					pulse = true;
@@ -299,7 +304,7 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 					Q = 1;
 				else
 					Q = 0;
-				
+
 				//need to change to jk
 				int[] jkffarray = TFlipFlop(T,Clk,Q);
 				jkff.drawJKFlipFlop(g2, J, K, Clk, Q, jkffarray);
@@ -308,7 +313,7 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 					enableButtons();
 				}
 				break;
-		
+
 			default:
 				g.drawString(mode, 10, 20);
 		}
@@ -670,7 +675,7 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 	public void drawAnd(Graphics2D g2, int x, int y)
 	{
 		g2.drawRect(x, y, andWidth, andHeight);
-		g2.clearRect(x+(andWidth-(lineThickness/2)), y+1, lineThickness, andHeight-1);
+		g2.clearRect(x+(andWidth-(lineThickness/2)), y+2, lineThickness+1, andHeight-2);
 		g2.drawArc(x+(andWidth-50), y, 100, andHeight, 270, 180);
 	}
 
