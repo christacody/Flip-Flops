@@ -280,8 +280,8 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 				K = 0;
 				butS.setText("J");
 				butR.setText("K");
-				but.setText("Clk");
-				butQ.setText("START");
+				but.setText("START");
+				butQ.setText("Clk");
 				butJ.setText("Q");
 				butJ.setVisible(true);
 
@@ -331,6 +331,16 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 			{
 				requestFocus();
 			}
+		}
+
+		if(mode == "JK Flip-Flop")
+		{
+			disableButtons();
+			butJ.setEnabled(false);
+		}
+		else
+		{
+			enableButtons();
 		}
 	}
 
