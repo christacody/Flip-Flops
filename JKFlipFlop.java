@@ -7,45 +7,46 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 
-public class TFlipFlop{
+public class JKFlipFlop{
 
 	public static boolean pulse = false;
 	public static int stage;
 
-	public TFlipFlop()
+	public JKFlipFlop()
 	{
 
 	}
 
-	public void drawTFlipFlop(Graphics2D g2, int T, int Clk, int Q, int[] array)
+	public void drawJKFlipFlop(Graphics2D g2, int J,int K, int Clk, int Q, int[] array)
 	{
 		String notq = "";
 		if(Q ==1)
 			notq = "0";
 		else
 			notq = "1";
-
-		String t = Integer.toString(T);
+		//just to run, change
+		String j = Integer.toString(J);
+		String k = Integer.toString(K);
 		String clk = Integer.toString(Clk);
 		String q = Integer.toString(Q);
 
-		int xXOR = 250;
+		int xXOR = 350;
 		int yXOR = 200;
 		Font f = new Font("Monospaced", 1, 26);
 		Font num = new Font("Monospaced", 1, 16);
 		g2.setColor(Color.black);
 		g2.setFont(f);
 
-		g2.drawString("T", xXOR-100, yXOR+53);
-		g2.drawString("Clk", xXOR-125, yXOR+205);
+		g2.drawString("J", xXOR-100, yXOR+53);
+		g2.drawString("K", xXOR-125, yXOR+205);
+		g2.drawString("Clk", xXOR-125, yXOR+300);
 		g2.drawString("D", xXOR+205, yXOR+35);
-		//g2.drawString("Clk", xXOR+205, yXOR+205);
-		drawTriState(g2, xXOR+200, yXOR+180);
+		g2.drawString("Clk", xXOR+205, yXOR+205);
 		g2.drawString("Q", xXOR+380, yXOR+35);
 		g2.drawLine(xXOR+383, yXOR+187, xXOR+391, yXOR+187);
 		g2.drawString("Q", xXOR+380, yXOR+205);
 		g2.drawString("Q", xXOR+605, yXOR+35);
-		g2.drawLine(xXOR+608, yXOR+175, xXOR+616, yXOR+175);
+		g2.drawLine(xXOR+608, yXOR+182, xXOR+616, yXOR+182);
 		g2.drawString("Q", xXOR+605, yXOR+200);
 		g2.drawRect(xXOR+200, yXOR-20, 200, 300);
 		drawSegT1(g2, xXOR, yXOR);
@@ -58,14 +59,14 @@ public class TFlipFlop{
 		drawSegT8(g2, xXOR, yXOR);
 		drawSegT9(g2, xXOR, yXOR);
 		drawSegT10(g2, xXOR, yXOR);
-		drawXOR(g2, xXOR, yXOR);
+		//drawXOR(g2, xXOR, yXOR);
 
 		g2.setFont(num);
-		g2.drawString(t, xXOR-95, yXOR+75);
-		g2.drawString(clk, xXOR-95, yXOR+225);
+		g2.drawString(j, xXOR-95, yXOR+75);
+		g2.drawString(k, xXOR-95, yXOR+225);
 		g2.setFont(f);
 
-		drawTFFanimation(g2, xXOR, yXOR,Q, array);
+		drawJKFFanimation(g2, xXOR, yXOR,Q, array);
 	}
 	public int getStage()
 	{
@@ -75,7 +76,7 @@ public class TFlipFlop{
 	{
 		this.pulse = pulse;
 	}
-	public void drawTFFanimation(Graphics2D g2, int x, int y, int Q, int[] array)
+	public void drawJKFFanimation(Graphics2D g2, int x, int y, int Q, int[] array)
 	{
 		Font font = new Font("Monospaced", 1, 26);
 		Font num = new Font("Monospaced", 1, 16);
@@ -86,10 +87,10 @@ public class TFlipFlop{
 		else
 			notq = "1";
 
-		String c = Integer.toString(array[0]);
+		/*String c = Integer.toString(array[0]);
 		String d = Integer.toString(array[1]);
 		String e = Integer.toString(array[2]);
-		String f = Integer.toString(array[3]);
+		String f = Integer.toString(array[3]);*/
 
 		String q = Integer.toString(Q);
 
@@ -97,6 +98,8 @@ public class TFlipFlop{
 		  {
 				stage = 3;
 		  }
+
+
 
 			if( stage == 3)
 			{
@@ -109,7 +112,7 @@ public class TFlipFlop{
 				drawSegT7(g2, x, y);
 				g2.setColor(Color.black);
 				g2.setFont(num);
-				g2.drawString(c, x-20, y+10);
+				//g2.drawString(c, x-20, y+10);
 				g2.setFont(font);
 
 			}
@@ -122,7 +125,7 @@ public class TFlipFlop{
 				drawSegT5(g2, x, y);
 				drawSegT7(g2, x, y);
 				g2.setFont(num);
-				g2.drawString(c, x-20, y+10);
+				//g2.drawString(c, x-20, y+10);
 				g2.setFont(font);
 			}
 
@@ -133,7 +136,7 @@ public class TFlipFlop{
 				drawSegT10(g2, x, y);
 				g2.setColor(Color.black);
 				g2.setFont(num);
-				g2.drawString(d, x+130, y+30);
+				//g2.drawString(d, x+130, y+30);
 				g2.setFont(font);
 
 			}
@@ -142,7 +145,7 @@ public class TFlipFlop{
 				drawSegT8(g2, x, y);
 				drawSegT10(g2, x, y);
 				g2.setFont(num);
-				g2.drawString(d, x+130, y+30);
+				//g2.drawString(d, x+130, y+30);
 				g2.setFont(font);
 			}
 
@@ -227,23 +230,38 @@ public class TFlipFlop{
 		g2.drawLine(tAndX+120, tAndY+35, tAndX+200, tAndY+35);
 	}
 
-		public void drawOr(Graphics2D g2, int x, int y)
+	
+	
+
+	public void drawAnd(Graphics2D g2, int x, int y)
+	{
+		int andWidth = 40;			//Width of the AND/NAND gates
+	    int andHeight = 90;	
+		int lineThickness = 4;
+		g2.drawRect(x, y, andWidth, andHeight);
+		g2.clearRect(x+(andWidth-(lineThickness/2)), y+1, lineThickness, andHeight-1);
+		g2.drawArc(x+(andWidth-50), y, 100, andHeight, 270, 180);
+	}
+	/** Draw an OR gate at coordinates (x, y) */
+	public void drawOr(Graphics2D g2, int x, int y)
 	{
 		g2.drawArc(x, y, 30, 75, 270, 180);
 		g2.drawArc(x-55, y-2, 175, 75, 0, 105);
 		g2.drawArc(x-55, y-4, 175, 80, 260, 96);
 	}
-	/** Draw a XOR gate at coordinates (x, y) */
-	public void drawXOR(Graphics2D g2, int x, int y)
+	
+	public void drawNotGate(Graphics2D g2, int x, int y)
 	{
-		drawOr(g2, x, y);
-		g2.drawArc(x-12, y, 30, 75, 270, 180);
+		g2.drawLine(x, y, x, y+40);
+		g2.drawLine(x, y, x+40, y+20);
+		g2.drawLine(x, y+40, x+40, y+20);
+		g2.drawOval(x+40, y+13, 12, 12);
 	}
+	
 	public void drawTriState(Graphics2D g2, int x, int y)
 	{
 		g2.drawLine(x, y, x, y+40);
 		g2.drawLine(x, y, x+40, y+20);
 		g2.drawLine(x, y+40, x+40, y+20);
 	}
-
 }

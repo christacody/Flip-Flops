@@ -48,7 +48,7 @@ public class Board
 		frame.setLocationRelativeTo(null);
 
 		//Make the drop-down list of diagram options & labels for the options
-		String[] opts = {"SR Latch", "D Flip-Flop", "T Flip-Flop"};
+		String[] opts = {"SR Latch", "D Flip-Flop", "T Flip-Flop", "JK Flip-Flop"};
 		final JPanel comboPanel = new JPanel();
 		JLabel comboLbl = new JLabel("Diagrams: ");
 		final JComboBox<String> examples = new JComboBox<String>(opts);
@@ -94,10 +94,11 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 	private int stage = 0;				//Indicates stage of diagram to be drawn next
 	private int delay = 800;			//Determines how often diagram is repainted
 	private BasicStroke defaultStroke;	//Default line thickness
-	private boolean s, r, q, q2, d, clk, t, stall, scenario2;
+	private boolean s, r, q, q2, d, clk, t, stall, scenario2, j, k;
 	private TFlipFlop tff;
+	private JKFlipFlop jkff;
 	private int[] latch;
-	JButton but, butS, butR, butQ;
+	JButton but, butS, butR, butQ, butJ;
 
 
 	/** Constructor: Set border color to black */
@@ -120,10 +121,16 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 		butQ.addActionListener(this);
 		butQ.setActionCommand("Q");
 		this.add(butQ);
-
+		butJ = new JButton("J");
+		butJ.addActionListener(this);
+		butJ.setActionCommand("J");
+		butJ.setVisible(false);
+		this.add(butJ);
+		
 		setBorder(BorderFactory.createLineBorder(Color.black));
 		defaultStroke = new BasicStroke(lineThickness);
 		tff = new TFlipFlop();
+		jkff = new JKFlipFlop();
 
 		// Repaint in increments specified by $delay
 		ActionListener drawDelay = new ActionListener()
@@ -144,6 +151,13 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 						repaint();
 					}
 				}
+				else if (mode == "JK Flip-Flop")
+				{
+					if(jkff.getStage() ==0 && !stall)
+					{
+						repaint();
+					}
+				}
 			}
 		};
 
@@ -160,6 +174,10 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 		t = true;
 		stall = false;
 		scenario2 = false;
+		j = true; 
+		k = true; 
+		
+		
 	}
 
 	/** Returns preferred size */
@@ -251,13 +269,53 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 				int[] tffarray = TFlipFlop(T,Clk,Q);
 				tff.drawTFlipFlop(g2, T, Clk, Q, tffarray);
 				pulse = false;
-
 				if(tff.getStage() == 0 && !stall)
 				{
 					enableButtons();
 				}
+				break;
+				
+				case "JK Flip-Flop":
+				int J,K;
+				J = 0;
+				K = 0;
+				butS.setText("J");
+				butR.setText("K");
+				but.setText("Clk");
+				butQ.setText("START");
+				butJ.setText("Q");
+				butJ.setVisible(true);
+				
+				int stageJK = jkff.getStage();
+				if(stageJK != 0)
+					pulse = true;
+				if(stageJK == 1)
+					stall = true;
+				jkff.setPulse(pulse);
+				//int T,Clk,Q;
+				if( t == true)
+					T = 1;
+				else
+					T = 0;
+				if( clk == true)
+					Clk = 1;
+				else
+					Clk = 0;
+				if( q == true)
+					Q = 1;
+				else
+					Q = 0;
+				
+				//need to change to jk
+				int[] jkffarray = TFlipFlop(T,Clk,Q);
+				jkff.drawJKFlipFlop(g2, J, K, Clk, Q, jkffarray);
+			    if(jkff.getStage() == 0 && !stall)
+				{
+					enableButtons();
+				}
+				break;
+			
 
-			break;
 
 			default:
 				g.drawString(mode, 10, 20);
