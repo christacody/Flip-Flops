@@ -98,8 +98,6 @@ public class TFlipFlop{
 				stage = 3;
 		  }
 
-
-
 			if( stage == 3)
 			{
 				g2.setColor(Color.green);
