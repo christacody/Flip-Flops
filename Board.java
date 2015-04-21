@@ -345,10 +345,6 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 			disableButtons();
 			butJ.setEnabled(false);
 		}
-		else
-		{
-			enableButtons();
-		}
 	}
 
 	/** Draw Gated SR Latch onscreen */
