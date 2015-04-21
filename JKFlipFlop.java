@@ -290,7 +290,7 @@ public class JKFlipFlop{
 	public void drawAnd(Graphics2D g2, int x, int y)
 	{
 		int andWidth = 40;			//Width of the AND/NAND gates
-	    int andHeight = 90;	
+	    int andHeight = 90;
 		int lineThickness = 4;
 		g2.drawRect(x, y, andWidth, andHeight);
 		g2.clearRect(x+(andWidth-(lineThickness/2)), y+1, lineThickness+1, andHeight-1);
@@ -303,7 +303,7 @@ public class JKFlipFlop{
 		g2.drawArc(x-55, y-2, 175, 75, 0, 105);
 		g2.drawArc(x-55, y-4, 175, 80, 260, 96);
 	}
-	
+
 	public void drawNotGate(Graphics2D g2, int x, int y)
 	{
 		g2.drawLine(x, y, x, y+40);
@@ -311,7 +311,7 @@ public class JKFlipFlop{
 		g2.drawLine(x, y+40, x+40, y+20);
 		g2.drawOval(x+40, y+13, 12, 12);
 	}
-	
+
 	public void drawTriState(Graphics2D g2, int x, int y)
 	{
 		g2.drawLine(x, y, x, y+40);

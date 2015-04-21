@@ -280,8 +280,8 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 				K = 0;
 				butS.setText("J");
 				butR.setText("K");
-				but.setText("Clk");
-				butQ.setText("START");
+				but.setText("START");
+				butQ.setText("Clk");
 				butJ.setText("Q");
 				butJ.setVisible(true);
 
@@ -332,6 +332,16 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 				requestFocus();
 			}
 		}
+
+		if(mode == "JK Flip-Flop")
+		{
+			disableButtons();
+			butJ.setEnabled(false);
+		}
+		else
+		{
+			enableButtons();
+		}
 	}
 
 	/** Draw Gated SR Latch onscreen */
@@ -358,6 +368,8 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 		drawNotGate(g2, tAndX-130, bAndY+89);
 		drawConnect(g2, tAndX-187, tAndY-(andHeight/2-24));
 		drawConnect(g2, tAndX-70, tAndY+144);
+		drawConnect(g2, tAndX+(andWidth+305), tAndY+(andHeight/2-8));
+		drawConnect(g2, tAndX+(andWidth+305), bAndY+(andHeight/2-8));
 
 		f = new Font("Monospaced", 1, 16);
 		g2.setFont(f);
@@ -548,6 +560,8 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 		drawIOPoint(g2, tAndX-112, bAndY+70);
 		drawIOPoint(g2, tAndX+(andWidth+202), tAndY+(andHeight/2-7));
 		drawIOPoint(g2, tAndX+(andWidth+202), bAndY+(andHeight/2-7));
+		drawConnect(g2, tAndX+(andWidth+105), tAndY+(andHeight/2-8));
+		drawConnect(g2, tAndX+(andWidth+105), bAndY+(andHeight/2-8));
 
 		f = new Font("Monospaced", 1, 16);
 		g2.setFont(f);
