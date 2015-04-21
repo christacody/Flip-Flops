@@ -1,6 +1,8 @@
 /**
  * Display interactive diagrams of circuit components including
  * S-R Latch, D Flip-Flop, and T Flip-Flop.
+ * Optional JK Flip-Flop is included only as a diagram: no interactive features
+ * have been implemented to date
  *
  * @author	Harrry Allen
  * @author	Christa Cody
@@ -271,7 +273,7 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 						q = false;
 				}
 				tff.drawTFlipFlop(g2, T, Clk, Q, tffarray);
-				
+
 				pulse = false;
 				if(tff.getStage() == 0 && !stall)
 				{
@@ -286,9 +288,9 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 				butS.setText("J");
 				butR.setText("K");
 				but.setText("START");
-				butQ.setText("Clk");
-				butJ.setText("Q");
-				butJ.setVisible(true);
+				//butQ.setText("Clk");
+				//butJ.setText("Q");
+				//butJ.setVisible(true);
 
 				int stageJK = jkff.getStage();
 				if(stageJK != 0)
