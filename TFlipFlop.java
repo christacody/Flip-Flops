@@ -47,6 +47,7 @@ public class TFlipFlop{
 		g2.drawLine(xXOR+608, yXOR+175, xXOR+616, yXOR+175);
 		g2.drawString("Q", xXOR+605, yXOR+200);
 		g2.drawRect(xXOR+200, yXOR-20, 200, 300);
+		g2.fillOval(xXOR+493, yXOR+28, 14, 14);
 		drawSegT1(g2, xXOR, yXOR);
 		drawSegT2(g2, xXOR, yXOR);
 		drawSegT3(g2, xXOR, yXOR);
@@ -236,7 +237,7 @@ public class TFlipFlop{
 	public void drawXOR(Graphics2D g2, int x, int y)
 	{
 		drawOr(g2, x, y);
-		g2.drawArc(x-12, y, 30, 75, 270, 180);
+		g2.drawArc(x-8, y, 30, 75, 270, 180);
 	}
 	public void drawTriState(Graphics2D g2, int x, int y)
 	{
