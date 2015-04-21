@@ -2,10 +2,6 @@
  * Display interactive diagrams of circuit components including
  * S-R Latch, D Flip-Flop, and T Flip-Flop.
  *
- * TODO:
- *		 - Possibly clean up graphics
-		 - Add JK Flip-Flop
- *
  * @author	Harrry Allen
  * @author	Christa Cody
  */
@@ -91,7 +87,7 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 	private int lineThickness = 4;		//Thickness of lines drawn
 	private boolean pulse = false;		//Indicates pulse to be drawn on diagram
 	private int stage = 0;				//Indicates stage of diagram to be drawn next
-	private int delay = 800;			//Determines how often diagram is repainted
+	private int delay = 400;			//Determines how often diagram is repainted
 	private BasicStroke defaultStroke;	//Default line thickness
 	private boolean s, r, q, q2, d, clk, t, stall, scenario2, j, k;
 	private TFlipFlop tff;
