@@ -200,6 +200,12 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setStroke(new BasicStroke(lineThickness));
 		g2.setColor(Color.black);
+		g2.setRenderingHint(
+			RenderingHints.KEY_ANTIALIASING,
+			RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setRenderingHint(
+		    RenderingHints.KEY_TEXT_ANTIALIASING,
+		    RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		super.paintComponent(g);
 
 		//Draw instructions
@@ -614,7 +620,7 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 	public void drawAnd(Graphics2D g2, int x, int y)
 	{
 		g2.drawRect(x, y, andWidth, andHeight);
-		g2.clearRect(x+(andWidth-(lineThickness/2)), y+1, lineThickness, andHeight-1);
+		g2.clearRect(x+(andWidth-(lineThickness/2)), y+2, lineThickness+1, andHeight-2);
 		g2.drawArc(x+(andWidth-50), y, 100, andHeight, 270, 180);
 	}
 
