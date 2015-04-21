@@ -31,17 +31,17 @@ public class JKFlipFlop{
 		String q = Integer.toString(Q);
 
 		int xXOR = 350;
-		int yXOR = 200;
+		int yXOR = 150;
 		Font f = new Font("Monospaced", 1, 26);
 		Font num = new Font("Monospaced", 1, 16);
 		g2.setColor(Color.black);
 		g2.setFont(f);
 
 		g2.drawString("J", xXOR-300, yXOR+53);
-		g2.drawString("K", xXOR-300, yXOR+150);
-		g2.drawString("Clk", xXOR-400, yXOR+300);
+		g2.drawString("K", xXOR-300, yXOR+154);
+		g2.drawString("Clk", xXOR-330, yXOR+290);
 		g2.drawString("D", xXOR+205, yXOR+35);
-		g2.drawString("Clk", xXOR+205, yXOR+205);
+		drawTriState(g2, xXOR+200, yXOR+180);
 		g2.drawString("Q", xXOR+380, yXOR+35);
 		g2.drawLine(xXOR+383, yXOR+187, xXOR+391, yXOR+187);
 		g2.drawString("Q", xXOR+380, yXOR+205);
@@ -59,12 +59,23 @@ public class JKFlipFlop{
 		drawSegT8(g2, xXOR, yXOR);
 		drawSegT9(g2, xXOR, yXOR);
 		drawSegT10(g2, xXOR, yXOR);
-		//drawXOR(g2, xXOR, yXOR);
+		drawSegT12(g2, xXOR, yXOR);
+		drawSegT13(g2, xXOR, yXOR);
+		drawSegT14(g2, xXOR, yXOR);
+		drawSegT15(g2,xXOR,yXOR);
+		drawSegT16(g2,xXOR,yXOR);
+		drawSegT17(g2,xXOR,yXOR);
+		drawSegT18(g2,xXOR,yXOR);
+		drawSegT19(g2,xXOR,yXOR);
+		drawSegT20(g2,xXOR,yXOR);
 		drawAnd(g2, xXOR-150, yXOR-15);
+		drawAnd(g2,xXOR-150, yXOR+125 );
+		drawOr(g2,xXOR- 20, yXOR + 50);
+		drawNotGate(g2, xXOR-240, yXOR+130);
 
 		g2.setFont(num);
-		g2.drawString(j, xXOR-95, yXOR+75);
-		g2.drawString(k, xXOR-95, yXOR+225);
+		//g2.drawString(j, xXOR-95, yXOR+75);
+		//g2.drawString(k, xXOR-95, yXOR+225);
 		g2.setFont(f);
 
 		drawJKFFanimation(g2, xXOR, yXOR,Q, array);
@@ -158,8 +169,8 @@ public class JKFlipFlop{
 				drawSegT9(g2, x, y);
 				g2.setColor(Color.black);
 				g2.setFont(num);
-				g2.drawString(q, x+610, y+55);
-				g2.drawString(notq, x+610, y+220);
+				//g2.drawString(q, x+610, y+55);
+				//g2.drawString(notq, x+610, y+220);
 				g2.setFont(font);
 			}
 			else
@@ -167,8 +178,8 @@ public class JKFlipFlop{
 				drawSegT6(g2, x, y);
 				drawSegT9(g2, x, y);
 				g2.setFont(num);
-				g2.drawString(q, x+610, y+55);
-				g2.drawString(notq, x+610, y+220);
+				//g2.drawString(q, x+610, y+55);
+				//g2.drawString(notq, x+610, y+220);
 				g2.setFont(font);
 			}
 
@@ -208,7 +219,7 @@ public class JKFlipFlop{
 	}
 	private void drawSegT5(Graphics2D g2, int tAndX, int tAndY)
 	{
-		g2.drawLine(tAndX+500, tAndY-100, tAndX+500, tAndY+35);
+		g2.drawLine(tAndX+500, tAndY-100, tAndX+500, tAndY+200);
 	}
 	private void drawSegT6(Graphics2D g2, int tAndX, int tAndY)
 	{
@@ -220,7 +231,8 @@ public class JKFlipFlop{
 	}
 	private void drawSegT8(Graphics2D g2, int tAndX, int tAndY)
 	{
-		g2.drawLine(tAndX-280, tAndY+150, tAndX-150, tAndY+150);
+		g2.drawLine(tAndX-280, tAndY+150, tAndX-240, tAndY+150);
+		g2.drawLine(tAndX-187, tAndY+150, tAndX-150, tAndY+150);
 	}
 	private void drawSegT9(Graphics2D g2, int tAndX, int tAndY)
 	{
@@ -228,11 +240,52 @@ public class JKFlipFlop{
 	}
 	private void drawSegT10(Graphics2D g2, int tAndX, int tAndY)
 	{
-		g2.drawLine(tAndX+120, tAndY+35, tAndX+200, tAndY+35);
+		g2.drawLine(tAndX+150, tAndY+35, tAndX+200, tAndY+35);
+		g2.drawLine(tAndX+150, tAndY+80, tAndX+150, tAndY+35);
+		g2.drawLine(tAndX+100, tAndY+80, tAndX+150, tAndY+80);
 	}
-
 	
+	private void drawSegT12(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX+550, tAndY+35, tAndX+550, tAndY+310);
+	}
+	private void drawSegT13(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX-200, tAndY+310, tAndX+550, tAndY+310);
+	}
+	private void drawSegT14(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX-200, tAndY+310, tAndX-200, tAndY+185);
+	}
+	private void drawSegT15(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX-200, tAndY+185, tAndX-150, tAndY+185);
+	}
+	private void drawSegT16(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX-280, tAndY+280, tAndX+100, tAndY+280);
+	}
 	
+	private void drawSegT17(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX+100, tAndY+280, tAndX+100, tAndY+200);
+	}
+	private void drawSegT18(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX+100, tAndY+200, tAndX+200, tAndY+200);
+	}
+	private void drawSegT19(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX-57, tAndY+30, tAndX-35, tAndY+30);
+		g2.drawLine(tAndX-35, tAndY+30, tAndX-35, tAndY+70);
+		g2.drawLine(tAndX-35, tAndY+70, tAndX+5, tAndY+70);
+	}
+	private void drawSegT20(Graphics2D g2, int tAndX, int tAndY)
+	{
+		g2.drawLine(tAndX-57, tAndY+170, tAndX-35, tAndY+170);
+		g2.drawLine(tAndX-35, tAndY+170, tAndX-35, tAndY+100);
+		g2.drawLine(tAndX-35, tAndY+100, tAndX+5, tAndY+100);
+	}
 
 	public void drawAnd(Graphics2D g2, int x, int y)
 	{
@@ -240,7 +293,7 @@ public class JKFlipFlop{
 	    int andHeight = 90;	
 		int lineThickness = 4;
 		g2.drawRect(x, y, andWidth, andHeight);
-		g2.clearRect(x+(andWidth-(lineThickness/2)), y+1, lineThickness, andHeight-1);
+		g2.clearRect(x+(andWidth-(lineThickness/2)), y+1, lineThickness+1, andHeight-1);
 		g2.drawArc(x+(andWidth-50), y, 100, andHeight, 270, 180);
 	}
 	/** Draw an OR gate at coordinates (x, y) */
