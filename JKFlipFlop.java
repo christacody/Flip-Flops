@@ -37,9 +37,9 @@ public class JKFlipFlop{
 		g2.setColor(Color.black);
 		g2.setFont(f);
 
-		g2.drawString("J", xXOR-100, yXOR+53);
-		g2.drawString("K", xXOR-125, yXOR+205);
-		g2.drawString("Clk", xXOR-125, yXOR+300);
+		g2.drawString("J", xXOR-300, yXOR+53);
+		g2.drawString("K", xXOR-300, yXOR+150);
+		g2.drawString("Clk", xXOR-400, yXOR+300);
 		g2.drawString("D", xXOR+205, yXOR+35);
 		g2.drawString("Clk", xXOR+205, yXOR+205);
 		g2.drawString("Q", xXOR+380, yXOR+35);
@@ -60,6 +60,7 @@ public class JKFlipFlop{
 		drawSegT9(g2, xXOR, yXOR);
 		drawSegT10(g2, xXOR, yXOR);
 		//drawXOR(g2, xXOR, yXOR);
+		drawAnd(g2, xXOR-150, yXOR-15);
 
 		g2.setFont(num);
 		g2.drawString(j, xXOR-95, yXOR+75);
@@ -191,19 +192,19 @@ public class JKFlipFlop{
 
 	private void drawSegT1(Graphics2D g2, int tAndX, int tAndY)
 	{
-		g2.drawLine(tAndX-70, tAndY+46, tAndX+30, tAndY+46);
+		g2.drawLine(tAndX-280, tAndY+46, tAndX-150, tAndY+46);
 	}
 	private void drawSegT2(Graphics2D g2, int tAndX, int tAndY)
 	{
-		g2.drawLine(tAndX-62, tAndY+15, tAndX+27, tAndY+15);
+		g2.drawLine(tAndX-200, tAndY+15, tAndX-150, tAndY+15);
 	}
 	private void drawSegT3(Graphics2D g2, int tAndX, int tAndY)
 	{
-		g2.drawLine(tAndX-62, tAndY-100, tAndX-62, tAndY+15);
+		g2.drawLine(tAndX-200, tAndY-100, tAndX-200, tAndY+15);
 	}
 	private void drawSegT4(Graphics2D g2, int tAndX, int tAndY)
 	{
-		g2.drawLine(tAndX-62, tAndY-100, tAndX+500, tAndY-100);
+		g2.drawLine(tAndX-200, tAndY-100, tAndX+500, tAndY-100);
 	}
 	private void drawSegT5(Graphics2D g2, int tAndX, int tAndY)
 	{
@@ -219,7 +220,7 @@ public class JKFlipFlop{
 	}
 	private void drawSegT8(Graphics2D g2, int tAndX, int tAndY)
 	{
-		g2.drawLine(tAndX-70, tAndY+200, tAndX+200, tAndY+200);
+		g2.drawLine(tAndX-280, tAndY+150, tAndX-150, tAndY+150);
 	}
 	private void drawSegT9(Graphics2D g2, int tAndX, int tAndY)
 	{

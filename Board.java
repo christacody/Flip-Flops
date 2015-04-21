@@ -308,9 +308,7 @@ class MyPanel extends JPanel implements ActionListener, KeyListener
 					enableButtons();
 				}
 				break;
-			
-
-
+		
 			default:
 				g.drawString(mode, 10, 20);
 		}
