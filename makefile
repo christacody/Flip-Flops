@@ -7,7 +7,8 @@ RUN = java
 
 CLASSES = \
 	Board.java \
-	TFlipFlop.java
+	TFlipFlop.java \
+	JKFlipFlop.java
 
 default: classes
 
